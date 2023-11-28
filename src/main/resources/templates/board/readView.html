@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:fmt="http://www.thymeleaf.org/extras/thymeleaf-extras-java8time">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<div id="root">
+    <header>
+        <h1>게시판</h1>
+    </header>
+    <hr />
+
+    <div>
+        <a th:href="@{/board/list}">목록</a>
+        <a th:href="@{/board/writeView}">글 작성</a>
+    </div>
+    <hr />
+
+    <section id="container">
+        <form id="readForm" th:action="@{/board/readView}" method="post">
+            <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}" />
+        </form>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title" th:value="${read.title}" readonly="readonly" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="content">내용</label>
+                    <textarea id="content" name="content" readonly="readonly" th:text="${read.content}"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="writer">작성자</label>
+                    <input type="text" id="writer" name="writer" th:value="${read.writer}" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="register">작성날짜</label>
+                    <input type="text" id="register" name="register" th:value="${read.register}" readonly="readonly"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <button type="button" class="update_btn">수정</button>
+            <button type="button" class="delete_btn">삭제</button>
+            <button type="button" class="list_btn">목록</button>
+        </div>
+    </section>
+    <hr />
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+        var formObj = $("form#readForm");
+
+        $(".update_btn").on("click", function(){
+            formObj.attr("action", "/board/updateView");
+            formObj.attr("method", "get");
+            formObj.submit();
+        })
+
+        $(".delete_btn").on("click", function(){
+            var deleteConfirm = confirm("삭제하시겠습니까?");
+            if (deleteConfirm) {
+                formObj.attr("action", "/board/delete");
+                formObj.attr("method", "post");
+                formObj.submit();
+            }
+        })
+
+        $(".list_btn").on("click", function(){
+            location.href = "/board/list";
+        })
+    })
+</script>
+
+</body>
+</html>

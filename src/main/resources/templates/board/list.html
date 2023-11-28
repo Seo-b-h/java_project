@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시판</title>
+  <style>
+    li {list-style: none; float: left; padding: 6px;}
+  </style>
+</head>
+<body>
+<div id="root">
+  <header>
+    <h1>게시판</h1>
+  </header>
+  <hr />
+  <div>
+    <a th:href="@{/board/list}">목록</a>
+    <a th:href="@{/board/writeView}">글 작성</a>
+  </div>
+  <hr />
+  <section id="container">
+    <table>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>등록일</th>
+      </tr>
+      <tr th:each="item : ${list}">
+        <td th:text="${item.BoardNumber}"></td>
+        <td>
+          <a th:href="@{/board/readView(BoardNumber=${item.BoardNumber})}" th:text="${item.title}"></a>
+        </td>
+        <td th:text="${item.writer}"></td>
+        <td th:text="${item.register}"></td>
+      </tr>
+    </table>
+    <div class="search">
+      <select name="searchType" th:field="${scri.searchType}">
+        <option value="n" th:selected="${scri.searchType == null}">-----</option>
+        <option value="t" th:selected="${scri.searchType == 't'}">제목</option>
+        <option value="c" th:selected="${scri.searchType == 'c'}">내용</option>
+        <option value="w" th:selected="${scri.searchType == 'w'}">작성자</option>
+        <option value="tc" th:selected="${scri.searchType == 'tc'}">제목+내용</option>
+      </select>
+
+      <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>
+
+      <button id="searchBtn" type="button">검색</button>
+      <script th:inline="javascript">
+        $(document).ready(function () {
+          $('#searchBtn').click(function () {
+            var searchType = $('select[name="searchType"]').val();
+            var keyword = $('#keywordInput').val();
+            var url = "?page=1&perPageNum=10";
+            window.location.href = url + "&searchType=" + searchType + "&keyword=" + encodeURIComponent(keyword);
+          });
+        });
+      </script>
+    </div>
+
+    <div>
+      <ul>
+        <th:block th:if="${pageMaker.prev}">
+          <li><a th:href="'list' + ${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
+        </th:block>
+
+        <th:block th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+          <li><a th:href="'list' + ${pageMaker.makeSearch(idx)}" th:text="${idx}"></a></li>
+        </th:block>
+
+        <th:block th:if="${pageMaker.next &amp;&amp; pageMaker.endPage &gt; 0}">
+          <li><a th:href="'list' + ${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
+        </th:block>
+      </ul>
+    </div>
+  </section>
+  <hr />
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:fmt="http://www.thymeleaf.org/extras/thymeleaf-extras-java8time">
+<head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<div id="root">
+    <header>
+        <h1>게시판</h1>
+    </header>
+    <hr />
+
+    <div>
+        <a th:href="@{/board/list}">목록</a>
+        <a th:href="@{/board/writeView}">글 작성</a>
+    </div>
+    <hr />
+
+    <section id="container">
+        <form id="updateForm" th:action="@{/board/update}" method="post">
+            <input type="hidden" name="BoardNumber" th:value="${update.BoardNumber}" readonly="readonly"/>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <label for="title">제목</label>
+                        <input type="text" id="title" name="title" th:value="${update.title}" class="chk" title="제목을 입력하세요"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="content">내용</label>
+                        <textarea id="content" name="content" th:text="${update.content}" class="chk" title="내용을 입력하세요"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="writer">작성자</label>
+                        <input type="text" id="writer" name="writer" th:value="${update.writer}" readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="register">작성날짜</label>
+                        <input type="text" id="register" name="register" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button type="submit" class="update_btn">저장</button>
+                <button type="button" class="cancel_btn">취소</button>
+            </div>
+        </form>
+    </section>
+    <hr />
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+        $(".cancel_btn").on("click", function(){
+            event.preventDefault();
+            location.href = "/board/list";
+        })
+        $(".update_btn").on("click", function(){
+            if(fn_valiChk()){
+                return false;
+            }
+            $("#updateForm").submit();
+        })
+    })
+
+    function fn_valiChk(){
+        var updateForm = $("form[name='updateForm'] .chk").length;
+        for(var i = 0; i<updateForm; i++){
+            if($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null){
+                alert($(".chk").eq(i).attr("title"));
+                return true;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
