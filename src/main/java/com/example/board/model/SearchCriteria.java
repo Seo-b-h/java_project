@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SearchCriteria extends Criteria {
+    //게시물 검색을 위한 객체
     private String searchType = "";
     private String keyword = "";
 }

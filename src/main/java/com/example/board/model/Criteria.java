@@ -6,6 +6,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Criteria {
+    //게시물 페이징 구현을 위한 객체
 
     private int page;
     private int perPageNum;

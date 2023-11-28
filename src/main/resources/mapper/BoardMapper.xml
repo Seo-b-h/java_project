@@ -17,6 +17,7 @@
         VALUES (#{title}, #{content}, #{writer}, #{register})
     </insert>
 
+    <!-- include 태그로 동적 쿼리 구성 -->
     <select id="listPage" resultType="com.example.board.model.Board" parameterType="com.example.board.model.SearchCriteria">
         SELECT Tb.BoardNumber, Tb.Title, Tb.Content, Tb.Writer, Tb.Register
         FROM (SELECT BoardNumber, Title, Content, Writer, Register, ROW_NUMBER() OVER (ORDER BY BoardNumber DESC) AS RNUM
@@ -28,6 +29,7 @@
         ORDER BY Tb.BoardNumber DESC
     </select>
 
+    <!-- 동적 쿼리 -->
     <sql id="search">
         <if test="searchType != null">
             <if test="searchType == 't'.toString()">AND TITLE LIKE CONCAT('%',#{keyword},'%')</if>
