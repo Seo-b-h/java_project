@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    public List<Comment> readComment(int FKboardNumber) throws Exception;
+    public List<Comment> readComment(int boardNumber) throws Exception;
+
+    public void writeComment(Comment co) throws Exception;
 }

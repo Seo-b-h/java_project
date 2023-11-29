@@ -72,6 +72,24 @@
                 </li>
             </ol>
         </div>
+
+        <form th:object="${replyForm}" method="post" th:name="replyForm">
+            <input type="hidden" th:id="BoardNumber" th:name="BoardNumber" th:value="${read.BoardNumber}" />
+            <input type="hidden" th:id="page" th:name="page" th:value="${scri.page}" />
+            <input type="hidden" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}" />
+            <input type="hidden" th:id="searchType" th:name="searchType" th:value="${scri.searchType}" />
+            <input type="hidden" th:id="keyword" th:name="keyword" th:value="${scri.keyword}" />
+            <input type="hidden" th:id="register" th:name="register" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+            <div>
+                <label for="writer">댓글 작성자</label><input type="text" th:id="writer" th:name="writer" />
+                <br/>
+                <label for="content">댓글 내용</label><input type="text" th:id="content" th:name="content" />
+            </div>
+            <div>
+                <button type="submit" class="replyWriteBtn">작성</button>
+            </div>
+        </form>
+
     </section>
     <hr />
 </div>
@@ -109,6 +127,12 @@
             location.href = url;
         })
 
+        $(".replyWriteBtn").on("click", function(){
+            var formObj = $("form[name='replyForm']");
+            formObj.attr("action", "/board/replyWrite");
+            formObj.attr("method", "post");
+            formObj.submit();
+        });
     })
 </script>
 

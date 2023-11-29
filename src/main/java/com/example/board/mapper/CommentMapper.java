@@ -10,4 +10,7 @@ public interface CommentMapper {
 
     //댓글 조회
     public List<Comment> readComment(int FKboardNumber) throws Exception;
+
+    //댓글 작성
+    public void writeComment(Comment co) throws Exception;
 }

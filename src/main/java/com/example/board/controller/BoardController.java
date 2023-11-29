@@ -78,7 +78,7 @@ public class BoardController {
         return "board/readView";
     }
 
-    @GetMapping(value = "/board/updateView")
+    @GetMapping(value = "/updateView")
     public String updateView(Board board, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception
     {
         logger.info("updateView");
@@ -117,5 +117,21 @@ public class BoardController {
         rttr.addAttribute("keyword", scri.getKeyword());
 
         return "redirect:/board/list";
+    }
+
+    @PostMapping(value = "/replyWrite")
+    public String writeComment(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
+    {
+        logger.info("comment Write");
+
+        commentService.writeComment(co);
+
+        rttr.addAttribute("BoardNumber", co.getBoardNumber());
+        rttr.addAttribute("page", scri.getPage());
+        rttr.addAttribute("perPageNum", scri.getPerPageNum());
+        rttr.addAttribute("searchType", scri.getSearchType());
+        rttr.addAttribute("keyword", scri.getKeyword());
+
+        return "redirect:/board/readView";
     }
 }

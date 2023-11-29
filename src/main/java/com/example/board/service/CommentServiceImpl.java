@@ -20,7 +20,12 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
 
     @Override
-    public List<Comment> readComment(int FKboardNumber) throws Exception {
-        return commentMapper.readComment(FKboardNumber);
+    public List<Comment> readComment(int boardNumber) throws Exception {
+        return commentMapper.readComment(boardNumber);
+    }
+
+    @Override
+    public void writeComment(Comment co) throws Exception {
+        commentMapper.writeComment(co);
     }
 }

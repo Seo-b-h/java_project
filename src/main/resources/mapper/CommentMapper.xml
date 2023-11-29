@@ -12,13 +12,22 @@
     <!-- resultMap : SELECT문 실행 결과를 담을 객체를 resultMap으로 지정 -->
     <!-- parameterType : 객체의 프로퍼티값이 SQL문의 입력 파라미터에 지정 -->
 
+    <!-- 데이터베이스 수정사항 -->
+    <!-- ALTER TABLE COMMENT CHANGE `FKBoardNumber` `BoardNumber` INT; -->
+
     <!-- 댓글 조회 -->
     <select id="readComment" resultType="com.example.board.model.Comment">
         SELECT
             COMMENTNUMBER, CONTENT, WRITER, REGISTER
         FROM COMMENT
-        WHERE FKBOARDNUMBER = #{FKboardNumber}
+        WHERE BOARDNUMBER = #{boardNumber}
     </select>
+
+    <!-- 댓글 작성 -->
+    <insert id="writeComment" parameterType="com.example.board.model.Comment">
+        INSERT INTO COMMENT(BOARDNUMBER, CONTENT, WRITER, REGISTER)
+        VALUES(#{BoardNumber}, #{content}, #{writer}, #{register})
+    </insert>
 
 </mapper>
 

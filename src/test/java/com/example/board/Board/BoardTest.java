@@ -1,8 +1,11 @@
 package com.example.board.Board;
 
 import com.example.board.mapper.BoardMapper;
+import com.example.board.mapper.CommentMapper;
 import com.example.board.model.Board;
+import com.example.board.model.Comment;
 import com.example.board.service.BoardService;
+import com.example.board.service.CommentService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +29,12 @@ public class BoardTest {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Autowired
+    private CommentService commentService;
 
     private static final Logger logger = LoggerFactory.getLogger(BoardTest.class);
 
@@ -97,6 +106,29 @@ public class BoardTest {
 
         //then
         //Assertions.assertThat(boardService.list().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("게시물 댓글 작성")
+    public void 게시물_댓글_작성() throws Exception
+    {
+        //given
+        Comment comment = new Comment(295, 318, "newComment", "newWriter", LocalDate.now().toString());
+        //comment 객체를 만들었을 때
+
+        //when
+        commentService.writeComment(comment);
+        //comment를 작성하면
+
+        //then
+        List<Comment> commentList = commentService.readComment(295);
+        //commentService.readComment는 BoardNumber을 select하지 않기 때문에
+        //commentNumber의 값 = BoardNumber의 값과 같은 현상이 발생한다
+        Assertions.assertThat(commentList.get(0).getWriter()).isEqualTo(comment.getWriter());
+        //테스트코드에서는 댓글 작성이 잘 되는지, 게시물 번호에 맞는 댓글을 가져오는지를 확인하기 위해서이므로
+        //writer의 값을 isEqualTo()의 비교로 확인을 하였다
+
+        //295번 게시물의 첫번째 댓글이 readComment로 읽어온 댓글과 동일하다는 것을 알 수 있다
     }
 
 
