@@ -30,7 +30,10 @@
       <tr th:each="item : ${list}">
         <td th:text="${item.BoardNumber}"></td>
         <td>
-          <a th:href="@{/board/readView(BoardNumber=${item.BoardNumber})}" th:text="${item.title}"></a>
+<!--          <a th:href="@{/board/readView(BoardNumber=${item.BoardNumber})}" th:text="${item.title}"></a>-->
+          <a th:href="@{/board/readView(BoardNumber=${item.BoardNumber}, page=${scri.page}, perPageNum=${scri.perPageNum}, searchType=${scri.searchType}, keyword=${scri.keyword})}">
+            <span th:text="${item.title}"></span>
+          </a>
         </td>
         <td th:text="${item.writer}"></td>
         <td th:text="${item.register}"></td>

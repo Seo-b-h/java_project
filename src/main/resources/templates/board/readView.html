@@ -21,6 +21,10 @@
     <section id="container">
         <form id="readForm" th:action="@{/board/readView}" method="post">
             <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}" />
+            <input type="hidden" id="page" th:id="page" th:name="page" th:value="${scri.page}">
+            <input type="hidden" id="perPageNum" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}">
+            <input type="hidden" id="searchType" th:id="searchType" th:name="searchType" th:value="${scri.searchType}">
+            <input type="hidden" id="keyword" th:id="keyword" th:name="keyword" th:value="${scri.keyword}">
         </form>
         <table>
             <tbody>
@@ -79,8 +83,19 @@
         })
 
         $(".list_btn").on("click", function(){
-            location.href = "/board/list";
+            var page = /*[[${scri.page}]]*/ '';
+            var perPageNum = /*[[${scri.perPageNum}]]*/ '';
+            var searchType = /*[[${scri.searchType}]]*/ '';
+            var keyword = /*[[${scri.keyword}]]*/ '';
+
+            var url = "/board/list?page=" + page +
+                "&perPageNum=" + perPageNum +
+                "&searchType=" + searchType +
+                "&keyword=" + keyword;
+
+            location.href = url;
         })
+
     })
 </script>
 

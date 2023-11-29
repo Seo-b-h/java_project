@@ -62,7 +62,20 @@
     $(document).ready(function(){
         $(".cancel_btn").on("click", function(){
             event.preventDefault();
-            location.href = "/board/list";
+
+            var updateBoardNumber = /*[[${update.BoardNumber}]]*/ '';
+            var page = /*[[${scri.page}]]*/ '';
+            var perPageNum = /*[[${scri.perPageNum}]]*/ '';
+            var searchType = /*[[${scri.searchType}]]*/ '';
+            var keyword = /*[[${scri.keyword}]]*/ '';
+
+            var url = "/board/readView?BoardNumber=" + updateBoardNumber +
+                "&page=" + page +
+                "&perPageNum=" + perPageNum +
+                "&searchType=" + searchType +
+                "&keyword=" + keyword;
+
+            location.href = url;
         })
         $(".update_btn").on("click", function(){
             if(fn_valiChk()){

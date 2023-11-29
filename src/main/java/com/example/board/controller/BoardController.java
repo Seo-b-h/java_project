@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller //@Controller + @ResponseBody = @RestController
 //AJAX를 사용할 때 @ResponseBody가 필요함
@@ -59,41 +60,53 @@ public class BoardController {
     }
 
     @GetMapping(value = "/board/readView")
-    public String read(Board board, Model model) throws Exception
+    public String read(Board board, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception
     {
         logger.info("read");
 
         model.addAttribute("read", boardService.read(board.getBoardNumber()));
+        model.addAttribute("scri", scri);
 
         return "board/readView";
     }
 
     @GetMapping(value = "/board/updateView")
-    public String updateView(Board board, Model model) throws Exception
+    public String updateView(Board board, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception
     {
         logger.info("updateView");
 
         model.addAttribute("update", boardService.read(board.getBoardNumber()));
+        model.addAttribute("scri", scri);
 
         return "board/updateView";
     }
 
     @PostMapping(value = "/board/update")
-    public String update(Board board) throws Exception
+    public String update(Board board, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
         logger.info("update");
 
         boardService.update(board);
 
+        rttr.addAttribute("page", scri.getPage());
+        rttr.addAttribute("perPageNum", scri.getPerPageNum());
+        rttr.addAttribute("searchType", scri.getSearchType());
+        rttr.addAttribute("keyword", scri.getKeyword());
+
         return "redirect:/board/list";
     }
 
     @PostMapping(value = "/board/delete")
-    public String delete(Board board) throws Exception
+    public String delete(Board board, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
         logger.info("delete");
 
         boardService.delete(board.getBoardNumber());
+
+        rttr.addAttribute("page", scri.getPage());
+        rttr.addAttribute("perPageNum", scri.getPerPageNum());
+        rttr.addAttribute("searchType", scri.getSearchType());
+        rttr.addAttribute("keyword", scri.getKeyword());
 
         return "redirect:/board/list";
     }
