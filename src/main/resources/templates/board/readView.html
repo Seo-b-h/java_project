@@ -59,6 +59,19 @@
             <button type="button" class="delete_btn">삭제</button>
             <button type="button" class="list_btn">목록</button>
         </div>
+
+        <!-- 댓글 -->
+        <div id="comment">
+            <ol class="commentList">
+                <li th:each="commentList : ${commentList}">
+                    <p>
+                        작성자 : <span th:text="${commentList.writer}"></span><br />
+                        작성 날짜 : <span th:text="${commentList.register}"></span>
+                    </p>
+                    <p th:text="${commentList.content}"></p>
+                </li>
+            </ol>
+        </div>
     </section>
     <hr />
 </div>

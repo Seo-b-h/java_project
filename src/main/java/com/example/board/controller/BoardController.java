@@ -1,10 +1,9 @@
 package com.example.board.controller;
 
-import com.example.board.model.Board;
-import com.example.board.model.Criteria;
-import com.example.board.model.PageMaker;
-import com.example.board.model.SearchCriteria;
+import com.example.board.model.*;
 import com.example.board.service.BoardService;
+import com.example.board.service.CommentService;
+import com.example.board.service.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller //@Controller + @ResponseBody = @RestController
 //AJAX를 사용할 때 @ResponseBody가 필요함
 @RequiredArgsConstructor //final로 생성된 변수에 대해 생성자 주입
+@RequestMapping("/board/*")
 public class BoardController {
 
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
@@ -25,8 +28,10 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    private final CommentService commentService;
+
     //model.addAttribute() : Controller에서 생성된 데이터를 Model 객체를 통해 View로 전달
-    @GetMapping(value = "/board/writeView")
+    @GetMapping(value = "/writeView")
     public String writeView() throws Exception
     {
         logger.info("writeView");
@@ -34,7 +39,7 @@ public class BoardController {
         return "board/writeView";
     }
 
-    @PostMapping(value = "/board/write")
+    @PostMapping(value = "/write")
     public String write(Board board) throws Exception
     {
         logger.info("write");
@@ -43,7 +48,7 @@ public class BoardController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/board/list")
+    @GetMapping(value = "/list")
     public String list(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception
     {
         logger.info("list");
@@ -59,13 +64,16 @@ public class BoardController {
         return "board/list"; //View를 반환 ex) list라는 html을 반환
     }
 
-    @GetMapping(value = "/board/readView")
+    @GetMapping(value = "/readView")
     public String read(Board board, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception
     {
         logger.info("read");
 
         model.addAttribute("read", boardService.read(board.getBoardNumber()));
         model.addAttribute("scri", scri);
+
+        List<Comment> commentList = commentService.readComment(board.getBoardNumber());
+        model.addAttribute("commentList", commentList);
 
         return "board/readView";
     }
@@ -81,7 +89,7 @@ public class BoardController {
         return "board/updateView";
     }
 
-    @PostMapping(value = "/board/update")
+    @PostMapping(value = "/update")
     public String update(Board board, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
         logger.info("update");
@@ -96,7 +104,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @PostMapping(value = "/board/delete")
+    @PostMapping(value = "/delete")
     public String delete(Board board, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
         logger.info("delete");

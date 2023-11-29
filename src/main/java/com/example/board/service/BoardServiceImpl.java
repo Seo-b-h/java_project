@@ -19,7 +19,7 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
     //필수사항은 아니지만 Service에 구현된 메소드명과 mapper에 구현된 메소드명을 동일하게 할 것
 
-    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 
     private final BoardMapper boardMapper;
 
