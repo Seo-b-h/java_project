@@ -3,7 +3,7 @@
 <!-- 태그 규칙을 정의한 DTD 선언 => XML 파일이 어떤 구조와 어떤 element, 어떤 attributes를 가지는지 정의하는 것 -->
 
 <!-- SQL 구문이 존재하는 SQL Mapper 파일 -->
-<mapper namespace="com.example.board.mapper.TestMapper">
+<mapper namespace="com.example.board.mapper.MemberMapper">
     <!-- namespace : Mapper의 전체 경로를 지정 -->
     <!-- Root Element : 여러개의 SQL문을 묶는 용도로 사용 -->
     <!-- SELECT -> <select>, INSERT -> <insert>, UPDATE -> <update>, DELETE -> <delete> -->
@@ -16,9 +16,9 @@
         SELECT 1 AS 'column1', 2 AS 'column2'
     </select>
 
-    <insert id="register" parameterType="com.example.member.model.Member">
+    <insert id="register" parameterType="com.example.board.model.Member">
         INSERT INTO member(ID, Password, name, Regdate, Telephone)
-        VALUES (#{ID},#{Password},#{name},#{Regdate},#{Telephone})
+        VALUES (#{ID},#{Password},#{name},#{RegDate},#{telephone})
     </insert>
 
 </mapper>

@@ -1,7 +1,7 @@
-package com.example.member.controller;
+package com.example.board.controller;
 
-import com.example.member.service.MemberService;
-import com.example.member.model.Member;
+import com.example.board.service.MemberService;
+import com.example.board.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

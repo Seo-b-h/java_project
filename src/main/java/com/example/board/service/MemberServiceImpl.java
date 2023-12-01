@@ -1,8 +1,8 @@
-package com.example.member.service;
+package com.example.board.service;
 
-import com.example.member.mapper.MemberMapper;
-import com.example.member.model.Member;
-import com.example.member.service.MemberService;
+import com.example.board.mapper.MemberMapper;
+import com.example.board.model.Member;
+import com.example.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
