@@ -16,5 +16,10 @@
         SELECT 1 AS 'column1', 2 AS 'column2'
     </select>
 
+    <insert id="register" parameterType="com.example.member.model.Member">
+        INSERT INTO member(ID, Password, name, Regdate, Telephone)
+        VALUES (#{ID},#{Password},#{name},#{Regdate},#{Telephone})
+    </insert>
+
 </mapper>
 
