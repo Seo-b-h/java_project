@@ -30,4 +30,9 @@ public class MemberServiceImpl implements MemberService {
     public void memberDelete(Member member) throws Exception {
         memberMapper.memberDelete(member);
     }
+
+    @Override
+    public int userChk(Member member)throws Exception {
+        return memberMapper.userChk(member);
+    }
 }

@@ -25,21 +25,56 @@
         $("#memberDeleteBtn").on("click", function () {
             location.href="member/memberDeleteView";
         })
+        $("#submit").on("click", function () {
+            if($("#ID").val()==""){
+                alert("아이디를 입력해주세요.");
+                $("#ID").focus();
+                return false;
+            }
+
+            if($("#Password").val()==""){
+                alert("비밀번호를 입력해주세요.");
+                $("#Password").focus();
+                return false;
+            }
+
+            $.ajax({
+                url:"/member/userChk",
+                type:"POST",
+                dataType:"json",
+                async:false,
+                data:$("#homeForm").serializeArray(),
+                success: function (data) {
+                    if (data === 0) {
+                        alert("아이디 혹은 패스워드가 틀렸습니다.");
+                    } else {
+                        $.ajax({
+                            url: "/member/login",
+                            type: "POST",
+                            dataType: "json",
+                            async: false,
+                            data: $("#homeForm").serializeArray()
+                        })
+                        document.location.href = document.location.href;
+                    }
+                }
+            })
+        })
     })
 </script>
 <body>
-<form name='homeForm' method="post" action="/member/login">
+<form id='homeForm' method="post" action="/member/login">
     <th:block th:if="${session.member == null}">
         <div>
             <label for="ID"></label>
-            <input type="text" id="ID" name="ID">
+            <input type="text" id="ID" name="ID" />
         </div>
         <div>
             <label for="Password"></label>
-            <input type="password" id="Password" name="Password">
+            <input type="password" id="Password" name="Password" />
         </div>
         <div>
-            <button type="submit">로그인</button>
+            <button id="submit" type="button">로그인</button>
             <button id="registerBtn" type="button">회원가입</button>
         </div>
     </th:block>
