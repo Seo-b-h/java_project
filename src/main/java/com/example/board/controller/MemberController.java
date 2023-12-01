@@ -57,4 +57,16 @@ public class MemberController {
 
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/memberUpdateView", method = RequestMethod.GET)
+    public String registerUpdateView() throws Exception {
+        return "member/memberUpdateView";
+    }
+
+    @RequestMapping(value = "/memberUpdate", method = RequestMethod.POST)
+    public String registerUpdate(Member member, HttpSession session) throws Exception {
+        memberService.memberUpdate(member);
+        session.invalidate();
+        return "redirect:/";
+    }
 }

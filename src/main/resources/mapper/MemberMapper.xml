@@ -27,5 +27,9 @@
         Where ID = #{ID} AND Password = #{Password}
     </select>
 
+    <select id="memberUpdate">
+        UPDATE member SET Password = #{Password}, name = #{name}, Telephone = #{telephone}
+        WHERE ID = #{ID}
+    </select>
 </mapper>
 
