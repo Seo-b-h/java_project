@@ -30,8 +30,16 @@ public class MemberController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String postRegister(Member member) throws Exception {
         logger.info("post register");
-
-        memberService.register(member);
+        int result = memberService.idChk(member);
+        try{
+            if(result == 1) {
+                return "/member/register";
+            } else if(result == 0) {
+                memberService.register(member);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
         return "redirect:/";
     }
 
@@ -96,7 +104,13 @@ public class MemberController {
     @RequestMapping(value = "/userChk", method = RequestMethod.POST)
     @ResponseBody
     public int userChk(Member member) throws Exception {
-        logger.info("member info: {}", member);
+        //logger.info("member info: {}", member);
         return memberService.userChk(member);
+    }
+
+    @RequestMapping(value = "/idChk", method = RequestMethod.POST)
+    @ResponseBody
+    public int idChk(Member member) throws Exception {
+        return memberService.idChk(member);
     }
 }

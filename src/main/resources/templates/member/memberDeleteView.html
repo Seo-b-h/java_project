@@ -25,6 +25,7 @@
                 url:"/member/userChk",
                 type:"POST",
                 dataType:"json",
+                async:false,
                 data:$("#delForm").serializeArray(),
                 success: function (data) {
                     if (data === 0) {

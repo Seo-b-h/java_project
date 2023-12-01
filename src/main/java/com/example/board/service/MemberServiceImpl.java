@@ -35,4 +35,9 @@ public class MemberServiceImpl implements MemberService {
     public int userChk(Member member)throws Exception {
         return memberMapper.userChk(member);
     }
+
+    @Override
+    public  int idChk(Member member) throws Exception {
+        return memberMapper.idChk(member);
+    }
 }

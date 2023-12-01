@@ -14,4 +14,6 @@ public interface MemberMapper {
     public void memberDelete(Member member) throws Exception;
 
     public int userChk(Member member) throws Exception;
+
+    public int idChk(Member member) throws Exception;
 }
