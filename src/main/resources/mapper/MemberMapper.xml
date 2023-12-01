@@ -22,14 +22,19 @@
     </insert>
 
     <select id="login" resultType="com.example.board.model.Member">
-        SELECT ID, Password
+        SELECT ID, Password, name, Telephone
         FROM member
         Where ID = #{ID} AND Password = #{Password}
     </select>
 
-    <select id="memberUpdate">
+    <select id="memberUpdate" parameterType="com.example.board.model.Member">
         UPDATE member SET Password = #{Password}, name = #{name}, Telephone = #{telephone}
         WHERE ID = #{ID}
     </select>
+
+    <delete id="memberDelete" parameterType="com.example.board.model.Member">
+        DELETE FROM member
+        WHERE ID = #{ID} AND Password = #{Password}
+    </delete>
 </mapper>
 
