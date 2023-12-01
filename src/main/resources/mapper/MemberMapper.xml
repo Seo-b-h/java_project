@@ -21,5 +21,11 @@
         VALUES (#{ID},#{Password},#{name},#{RegDate},#{telephone})
     </insert>
 
+    <select id="login" resultType="com.example.board.model.Member">
+        SELECT ID, Password
+        FROM member
+        Where ID = #{ID} AND Password = #{Password}
+    </select>
+
 </mapper>
 
