@@ -42,5 +42,11 @@
         FROM member
         WHERE ID = #{ID} AND Password = #{Password}
     </select>
+
+    <select id="idChk" parameterType="com.example.board.model.Member" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE ID = #{ID}
+    </select>
 </mapper>
 
