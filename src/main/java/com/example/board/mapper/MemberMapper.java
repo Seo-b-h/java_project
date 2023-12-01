@@ -1,6 +1,6 @@
-package com.example.member.mapper;
+package com.example.board.mapper;
 
-import com.example.member.model.Member;
+import com.example.board.model.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
