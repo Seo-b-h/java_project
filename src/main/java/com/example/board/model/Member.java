@@ -30,12 +30,4 @@ public class Member {
         this.RegDate = null;
         this.telephone = null;
     }
-
-//    public Member(String ID, String Password, String name, String RegDate, String telephone) {
-//        this.ID = ID;
-//        this.Password = Password;
-//        this.name = name;
-//        this.RegDate = RegDate;
-//        this.telephone = telephone;
-//    }
 }

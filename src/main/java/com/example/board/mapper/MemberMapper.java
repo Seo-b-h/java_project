@@ -8,4 +8,6 @@ public interface MemberMapper {
     public void register(Member member) throws Exception;
 
     public Member login(Member member) throws Exception;
+
+    public void memberUpdate(Member member) throws Exception;
 }
