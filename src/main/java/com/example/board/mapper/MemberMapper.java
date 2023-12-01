@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberMapper {
     public void register(Member member) throws Exception;
+
+    public Member login(Member member) throws Exception;
 }
