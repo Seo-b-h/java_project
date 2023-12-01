@@ -31,7 +31,7 @@ public class MemberController {
         logger.info("post register");
 
         memberService.register(member);
-        return null;
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -66,6 +66,28 @@ public class MemberController {
     @RequestMapping(value = "/memberUpdate", method = RequestMethod.POST)
     public String registerUpdate(Member member, HttpSession session) throws Exception {
         memberService.memberUpdate(member);
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/memberDeleteView", method = RequestMethod.GET)
+    public String memberDeleteView() throws Exception {
+        return "member/memberDeleteView";
+    }
+
+    @RequestMapping(value = "/memberDelete", method = RequestMethod.POST)
+    public String memberDelete(Member member, HttpSession session, RedirectAttributes rttr) throws Exception {
+        Member mem = (Member) session.getAttribute("member");
+        // 세션에 있는 비밀번호
+        String sessionPassword = mem.getPassword();
+        // member로 들어오는 비밀번호
+        String memberPassword = member.getPassword();
+
+        if(!sessionPassword.equals(memberPassword)) {
+            rttr.addFlashAttribute("msg", false);
+            return"redirect:/member/memberDeleteView";
+        }
+        memberService.memberDelete(member);
         session.invalidate();
         return "redirect:/";
     }
