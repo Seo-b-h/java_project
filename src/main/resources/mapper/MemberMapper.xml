@@ -36,5 +36,11 @@
         DELETE FROM member
         WHERE ID = #{ID} AND Password = #{Password}
     </delete>
+
+    <select id="userChk" parameterType="com.example.board.model.Member" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE ID = #{ID} AND Password = #{Password}
+    </select>
 </mapper>
 

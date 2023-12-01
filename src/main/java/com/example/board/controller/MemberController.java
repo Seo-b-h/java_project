@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller //@Controller + @ResponseBody = @RestController
@@ -90,5 +91,12 @@ public class MemberController {
         memberService.memberDelete(member);
         session.invalidate();
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/userChk", method = RequestMethod.POST)
+    @ResponseBody
+    public int userChk(Member member) throws Exception {
+        logger.info("member info: {}", member);
+        return memberService.userChk(member);
     }
 }
