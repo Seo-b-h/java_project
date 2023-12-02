@@ -1,12 +1,14 @@
 package com.example.board.model;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@RequiredArgsConstructor
 public class Comment {
 
     private int BoardNumber;

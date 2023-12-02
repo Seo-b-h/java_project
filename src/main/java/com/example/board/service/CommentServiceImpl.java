@@ -28,4 +28,19 @@ public class CommentServiceImpl implements CommentService {
     public void writeComment(Comment co) throws Exception {
         commentMapper.writeComment(co);
     }
+
+    @Override
+    public void updateComment(Comment co) throws Exception {
+        commentMapper.updateComment(co);
+    }
+
+    @Override
+    public void deleteComment(Comment co) throws Exception {
+        commentMapper.deleteComment(co);
+    }
+
+    @Override
+    public Comment selectComment(int commentNumber) throws Exception {
+        return commentMapper.selectComment(commentNumber);
+    }
 }

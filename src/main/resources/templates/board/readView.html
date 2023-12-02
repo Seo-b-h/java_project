@@ -20,7 +20,7 @@
 
     <section id="container">
         <form id="readForm" th:action="@{/board/readView}" method="post">
-            <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}" />
+            <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read?.BoardNumber}" />
             <input type="hidden" id="page" th:id="page" th:name="page" th:value="${scri.page}">
             <input type="hidden" id="perPageNum" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}">
             <input type="hidden" id="searchType" th:id="searchType" th:name="searchType" th:value="${scri.searchType}">
@@ -69,6 +69,10 @@
                         작성 날짜 : <span th:text="${commentList.register}"></span>
                     </p>
                     <p th:text="${commentList.content}"></p>
+                    <div>
+                        <button type="button" class="replyUpdateBtn" th:attr="data-commentNumber=${commentList.commentNumber}">수정</button>
+                        <button type="button" class="replyDeleteBtn" th:attr="data-commentNumber=${commentList.commentNumber}">삭제</button>
+                    </div>
                 </li>
             </ol>
         </div>
@@ -132,6 +136,47 @@
             formObj.attr("action", "/board/replyWrite");
             formObj.attr("method", "post");
             formObj.submit();
+        });
+
+        $(".replyUpdateBtn").on("click", function () {
+            console.log("replyUpdateBtn click");
+            var BoardNumber = /*[[${read.BoardNumber}]]*/ '';
+            var page = /*[[${scri.page}]]*/ '';
+            var perPageNum = /*[[${scri.perPageNum}]]*/ '';
+            var searchType = /*[[${scri.searchType}]]*/ '';
+            var keyword = /*[[${scri.keyword}]]*/ '';
+            var commentNumber = $(this).attr("data-commentNumber");
+
+            var url = "/board/replyUpdateView?BoardNumber=" + BoardNumber +
+                "&page=" + page +
+                "&perPageNum=" + perPageNum +
+                "&searchType=" + searchType +
+                "&keyword=" + keyword +
+                "&commentNumber=" + commentNumber;
+
+            location.href = url;
+        });
+
+
+        $(".replyDeleteBtn").on("click", function(){
+            console.log(read);
+            console.log(scri);
+            var BoardNumber = /*[[${read.BoardNumber}]]*/ '';
+            var page = /*[[${scri.page}]]*/ '';
+            var perPageNum = /*[[${scri.perPageNum}]]*/ '';
+            var searchType = /*[[${scri.searchType}]]*/ '';
+            var keyword = /*[[${scri.keyword}]]*/ '';
+
+            console.log(BoardNumber);
+
+
+            var url = "/board/replyDeleteView?BoardNumber=" + BoardNumber +
+                "&page=" + page +
+                "&perPageNum=" + perPageNum +
+                "&searchType=" + searchType +
+                "&keyword=" + keyword;
+
+            location.href = url + $(this).attr("data-commentNumber");
         });
     })
 </script>

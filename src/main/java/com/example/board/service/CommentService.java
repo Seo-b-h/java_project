@@ -9,4 +9,10 @@ public interface CommentService {
     public List<Comment> readComment(int boardNumber) throws Exception;
 
     public void writeComment(Comment co) throws Exception;
+
+    public void updateComment(Comment co) throws Exception;
+
+    public void deleteComment(Comment co) throws Exception;
+
+    public Comment selectComment(int commentNumber) throws Exception;
 }

@@ -109,7 +109,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("게시물 댓글 작성")
+    @DisplayName("게시물 댓글 작성") //통과
     public void 게시물_댓글_작성() throws Exception
     {
         //given
@@ -131,5 +131,37 @@ public class BoardTest {
         //295번 게시물의 첫번째 댓글이 readComment로 읽어온 댓글과 동일하다는 것을 알 수 있다
     }
 
+    @Test
+    @DisplayName("댓글 수정") //통과
+    public void 댓글_수정() throws Exception
+    {
+        //given
+        Comment comment = new Comment(299, 306, "안녕~", "newWriter", LocalDate.now().toString());
+
+        //when
+        commentService.updateComment(comment);
+        List<Comment> commentList = commentService.readComment(299);
+
+        //then
+        Assertions.assertThat(commentList.get(1).getContent()).isEqualTo("안녕~");
+    }
+
+    @Test
+    @DisplayName("댓글 삭제") //통과
+    public void 댓글_삭제() throws Exception
+    {
+        //given
+        Comment comment = new Comment(299, 307, "안녕~", "newWriter", LocalDate.now().toString());
+
+        //when
+        List<Comment> commentList = commentService.readComment(299);
+        int size = commentList.size();
+        commentService.deleteComment(comment);
+
+        //then
+        List<Comment> commentList_cmp = commentService.readComment(299);
+        int size_cmp = commentList_cmp.size();
+        Assertions.assertThat(size_cmp).isEqualTo(size - 1);
+    }
 
 }

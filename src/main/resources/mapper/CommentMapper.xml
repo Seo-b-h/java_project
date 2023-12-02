@@ -29,5 +29,29 @@
         VALUES(#{BoardNumber}, #{content}, #{writer}, #{register})
     </insert>
 
+    <!-- 댓글 수정 -->
+    <update id="updateComment" parameterType="com.example.board.model.Comment">
+        UPDATE COMMENT SET CONTENT = #{content}
+        WHERE COMMENTNUMBER = #{commentNumber}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="com.example.board.model.Comment">
+        DELETE FROM COMMENT
+        WHERE COMMENTNUMBER = #{commentNumber}
+    </delete>
+
+    <!-- 선택된 댓글 조회 -->
+    <select id="selectComment" parameterType="int" resultType="com.example.board.model.Comment">
+        SELECT
+            COMMENTNUMBER,
+            BOARDNUMBER,
+            CONTENT,
+            WRITER,
+            REGISTER
+        FROM COMMENT
+        WHERE COMMENTNUMBER = #{commentNumber}
+    </select>
+
 </mapper>
 

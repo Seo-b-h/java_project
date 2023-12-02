@@ -9,8 +9,17 @@ import java.util.List;
 public interface CommentMapper {
 
     //댓글 조회
-    public List<Comment> readComment(int FKboardNumber) throws Exception;
+    public List<Comment> readComment(int boardNumber) throws Exception;
 
     //댓글 작성
     public void writeComment(Comment co) throws Exception;
+
+    //댓글 수정
+    public void updateComment(Comment co) throws Exception;
+
+    //댓글 삭제
+    public void deleteComment(Comment co) throws Exception;
+
+    //선택된 댓글 조회
+    public Comment selectComment(int commentNumber) throws Exception;
 }

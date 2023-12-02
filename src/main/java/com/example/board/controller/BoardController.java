@@ -45,7 +45,7 @@ public class BoardController {
         logger.info("write");
         boardService.write(board);
 
-        return "redirect:/";
+        return "redirect:/board/list";
     }
 
     @GetMapping(value = "/list")
@@ -125,6 +125,62 @@ public class BoardController {
         logger.info("comment Write");
 
         commentService.writeComment(co);
+
+        rttr.addAttribute("BoardNumber", co.getBoardNumber());
+        rttr.addAttribute("page", scri.getPage());
+        rttr.addAttribute("perPageNum", scri.getPerPageNum());
+        rttr.addAttribute("searchType", scri.getSearchType());
+        rttr.addAttribute("keyword", scri.getKeyword());
+
+        return "redirect:/board/readView";
+    }
+
+    @GetMapping(value = "/replyUpdateView")
+    public String commentUpdateView(Comment co, SearchCriteria scri, Model model) throws Exception
+    {
+        logger.info("reply Write");
+
+        logger.info(String.valueOf(co.getCommentNumber()));
+        model.addAttribute("commentUpdate", commentService.selectComment(co.getCommentNumber()));
+        model.addAttribute("scri", scri);
+
+        return "board/replyUpdateView";
+    }
+
+    @PostMapping(value = "/replyUpdate")
+    public String commentUpdate(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
+    {
+        logger.info("reply Write");
+
+        commentService.updateComment(co);
+
+        rttr.addAttribute("BoardNumber", co.getBoardNumber());
+        rttr.addAttribute("page", scri.getPage());
+        rttr.addAttribute("perPageNum", scri.getPerPageNum());
+        rttr.addAttribute("searchType", scri.getSearchType());
+        rttr.addAttribute("keyword", scri.getKeyword());
+
+        return "redirect:/board/readView";
+    }
+
+    @GetMapping(value = "/replyDeleteView")
+    public String commentDeleteView(Comment co, SearchCriteria scri, Model model) throws Exception
+    {
+        logger.info("reply Write");
+
+        model.addAttribute("commentDelete", commentService.selectComment(co.getCommentNumber()));
+        model.addAttribute("scri", scri);
+        //logger.info(String.valueOf(co.getCommentNumber()));
+
+        return "board/replyDeleteView";
+    }
+
+    @PostMapping(value = "/replyDelete")
+    public String commentDelete(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
+    {
+        logger.info("reply Write");
+
+        commentService.deleteComment(co);
 
         rttr.addAttribute("BoardNumber", co.getBoardNumber());
         rttr.addAttribute("page", scri.getPage());
