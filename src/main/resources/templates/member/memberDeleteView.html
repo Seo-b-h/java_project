@@ -8,25 +8,25 @@
     <title>회원탈퇴</title>
 </head>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         // 취소
-        $(".cancel").on("click", function(){
+        $(".cancel").on("click", function () {
             location.href = "/";
         })
 
-        $("#submit").on("click", function(){
-            if($("#Password").val()==""){
+        $("#submit").on("click", function () {
+            if ($("#Password").val() == "") {
                 alert("비밀번호를 입력해주세요.");
                 $("#Password").focus();
                 return false;
             }
 
             $.ajax({
-                url:"/member/userChk",
-                type:"POST",
-                dataType:"json",
-                async:false,
-                data:$("#delForm").serializeArray(),
+                url: "/member/userChk",
+                type: "POST",
+                dataType: "json",
+                async: false,
+                data: $("#delForm").serializeArray(),
                 success: function (data) {
                     if (data === 0) {
                         alert("패스워드가 틀렸습니다.");
@@ -51,19 +51,22 @@
     <form id="delForm" action="/member/memberDelete" method="post">
         <div class="form-group has-feedback">
             <label class="control-label" for="ID">아이디</label>
-            <input class="form-control" type="text" id="ID" name="ID" th:value="${session.member.ID}" readonly="readonly"/>
+            <input class="form-control" type="text" id="ID" name="ID" th:value="${session.member.ID}"
+                   readonly="readonly"/>
         </div>
         <div class="form-group has-feedback">
             <label class="control-label" for="Password">패스워드</label>
-            <input class="form-control" type="password" id="Password" name="Password" />
+            <input class="form-control" type="password" id="Password" name="Password"/>
         </div>
         <div class="form-group has-feedback">
             <label class="control-label" for="name">성명</label>
-            <input class="form-control" type="text" id="name" name="name" th:value="${session.member.name}" readonly="readonly"/>
+            <input class="form-control" type="text" id="name" name="name" th:value="${session.member.name}"
+                   readonly="readonly"/>
         </div>
         <div class="form-group has-feedback">
             <label class="control-label" for="telephone">전화 번호</label>
-            <input class="form-control" type="text" id="telephone" name="telephone" th:value="${session.member.telephone}" readonly="readonly"/>
+            <input class="form-control" type="text" id="telephone" name="telephone"
+                   th:value="${session.member.telephone}" readonly="readonly"/>
         </div>
         <div class="form-group has-feedback">
             <button class="btn btn-success" type="button" id="submit">회원 탈퇴</button>

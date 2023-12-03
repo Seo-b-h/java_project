@@ -10,16 +10,19 @@
     <header>
         <h1>게시판</h1>
     </header>
-    <hr />
+    <hr/>
     <div>
         <a th:href="@{/board/list}">목록</a>
         <a th:href="@{/board/writeView}">글 작성</a>
+        <a th:href="@{/}">회원 정보</a>
+        <a th:href="@{/member/logout}">로그 아웃</a>
+        <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
     </div>
-    <hr />
+    <hr/>
     <section id="container">
         <form name="updateForm" role="form" method="post" action="/board/replyDelete">
             <input type="hidden" name="BoardNumber" th:value="${commentDelete.boardNumber}" readonly="readonly"/>
-            <input type="hidden" id="commentNumber" name="commentNumber" th:value="${commentDelete.commentNumber}" />
+            <input type="hidden" id="commentNumber" name="commentNumber" th:value="${commentDelete.commentNumber}"/>
             <input type="hidden" id="page" name="page" th:value="${scri.page}">
             <input type="hidden" id="perPageNum" name="perPageNum" th:value="${scri.perPageNum}">
             <input type="hidden" id="searchType" name="searchType" th:value="${scri.searchType}">
@@ -28,11 +31,14 @@
             <div>
                 <p>삭제 하시겠습니까?</p>
                 <button type="submit" class="delete_btn">예 삭제합니다.</button>
-                <button type="button" class="cancel_btn" th:onclick="|window.location.href='@{/board/readView(BoardNumber=${commentDelete.boardNumber}, page=${scri.page}, perPageNum=${scri.perPageNum}, searchType=${scri.searchType}, keyword=${scri.keyword})}'|">아니오. 삭제하지 않습니다.</button>
+                <button type="button" class="cancel_btn"
+                        th:onclick="|window.location.href='@{/board/readView(BoardNumber=${commentDelete.boardNumber}, page=${scri.page}, perPageNum=${scri.perPageNum}, searchType=${scri.searchType}, keyword=${scri.keyword})}'|">
+                    아니오. 삭제하지 않습니다.
+                </button>
             </div>
         </form>
     </section>
-    <hr />
+    <hr/>
 </div>
 </body>
 </html>

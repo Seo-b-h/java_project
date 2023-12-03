@@ -7,43 +7,43 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
-<a href="/board/list">게시판</a><br />
+<a href="/board/list">게시판</a><br/>
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("#logoutBtn").on("click", function(){
-            location.href="member/logout";
+    $(document).ready(function () {
+        $("#logoutBtn").on("click", function () {
+            location.href = "member/logout";
         })
 
-        $("#registerBtn").on("click", function() {
-            location.href="member/register";
+        $("#registerBtn").on("click", function () {
+            location.href = "member/register";
         })
 
         $("#memberUpdateBtn").on("click", function () {
-            location.href="member/memberUpdateView";
+            location.href = "member/memberUpdateView";
         })
 
         $("#memberDeleteBtn").on("click", function () {
-            location.href="member/memberDeleteView";
+            location.href = "member/memberDeleteView";
         })
         $("#submit").on("click", function () {
-            if($("#ID").val()==""){
+            if ($("#ID").val() == "") {
                 alert("아이디를 입력해주세요.");
                 $("#ID").focus();
                 return false;
             }
 
-            if($("#Password").val()==""){
+            if ($("#Password").val() == "") {
                 alert("비밀번호를 입력해주세요.");
                 $("#Password").focus();
                 return false;
             }
 
             $.ajax({
-                url:"/member/userChk",
-                type:"POST",
-                dataType:"json",
-                async:false,
-                data:$("#homeForm").serializeArray(),
+                url: "/member/userChk",
+                type: "POST",
+                dataType: "json",
+                async: false,
+                data: $("#homeForm").serializeArray(),
                 success: function (data) {
                     if (data === 0) {
                         alert("아이디 혹은 패스워드가 틀렸습니다.");
@@ -55,7 +55,7 @@
                             async: false,
                             data: $("#homeForm").serializeArray()
                         })
-                        document.location.href = document.location.href;
+                        document.location.href = "/board/list";
                     }
                 }
             })
@@ -67,11 +67,11 @@
     <th:block th:if="${session.member == null}">
         <div>
             <label for="ID"></label>
-            <input type="text" id="ID" name="ID" />
+            <input type="text" id="ID" name="ID"/>
         </div>
         <div>
             <label for="Password"></label>
-            <input type="password" id="Password" name="Password" />
+            <input type="password" id="Password" name="Password"/>
         </div>
         <div>
             <button id="submit" type="button">로그인</button>
