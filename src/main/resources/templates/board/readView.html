@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:fmt="http://www.thymeleaf.org/extras/thymeleaf-extras-java8time">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:fmt="http://www.thymeleaf.org/extras/thymeleaf-extras-java8time">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
@@ -10,17 +11,25 @@
     <header>
         <h1>게시판</h1>
     </header>
-    <hr />
+    <hr/>
 
     <div>
         <a th:href="@{/board/list}">목록</a>
         <a th:href="@{/board/writeView}">글 작성</a>
+        <th:block th:if="${session.member == null}">
+            <a th:href="@{/}">로그인</a>
+        </th:block>
+        <th:block th:if="${session.member != null}">
+            <a th:href="@{/}">회원 정보</a>
+            <a th:href="@{/member/logout}">로그 아웃</a>
+            <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+        </th:block>
     </div>
-    <hr />
+    <hr/>
 
     <section id="container">
         <form id="readForm" th:action="@{/board/readView}" method="post">
-            <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}" />
+            <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}"/>
             <input type="hidden" id="page" th:id="page" th:name="page" th:value="${scri.page}">
             <input type="hidden" id="perPageNum" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}">
             <input type="hidden" id="searchType" th:id="searchType" th:name="searchType" th:value="${scri.searchType}">
@@ -31,7 +40,7 @@
             <tr>
                 <td>
                     <label for="title">제목</label>
-                    <input type="text" id="title" name="title" th:value="${read.title}" readonly="readonly" />
+                    <input type="text" id="title" name="title" th:value="${read.title}" readonly="readonly"/>
                 </td>
             </tr>
             <tr>
@@ -55,8 +64,10 @@
             </tbody>
         </table>
         <div>
-            <button type="button" class="update_btn">수정</button>
-            <button type="button" class="delete_btn">삭제</button>
+            <th:block th:if="${session.member != null} and ${session.member.ID == read.writer}">
+                <button type="button" class="update_btn">수정</button>
+                <button type="button" class="delete_btn">삭제</button>
+            </th:block>
             <button type="button" class="list_btn">목록</button>
         </div>
 
@@ -65,50 +76,63 @@
             <ol class="commentList">
                 <li th:each="commentList : ${commentList}">
                     <p>
-                        작성자 : <span th:text="${commentList.writer}"></span><br />
+                        작성자 : <span th:text="${commentList.writer}"></span><br/>
                         작성 날짜 : <span th:text="${commentList.register}"></span>
                     </p>
                     <p th:text="${commentList.content}"></p>
                     <div>
-                        <button type="button" class="replyUpdateBtn" th:attr="data-commentNumber=${commentList.commentNumber}">수정</button>
-                        <button type="button" class="replyDeleteBtn" th:attr="data-commentNumber=${commentList.commentNumber}">삭제</button>
+                        <th:block
+                                th:if="${session.member != null} and ${session.member.ID == commentList.writer}">
+                            <button type="button" class="replyUpdateBtn"
+                                    th:attr="data-commentNumber=${commentList.commentNumber}">수정
+                            </button>
+                        </th:block>
+                        <th:block
+                                th:if="${session.member != null} and (${session.member.ID == commentList.writer} or ${session.member.ID == read.writer})">
+                            <button type="button" class="replyDeleteBtn"
+                                    th:attr="data-commentNumber=${commentList.commentNumber}">삭제
+                            </button>
+                        </th:block>
                     </div>
                 </li>
             </ol>
         </div>
 
-        <form th:object="${replyForm}" method="post" th:name="replyForm">
-            <input type="hidden" th:id="BoardNumber" th:name="BoardNumber" th:value="${read?.BoardNumber}" />
-            <input type="hidden" th:id="page" th:name="page" th:value="${scri.page}" />
-            <input type="hidden" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}" />
-            <input type="hidden" th:id="searchType" th:name="searchType" th:value="${scri.searchType}" />
-            <input type="hidden" th:id="keyword" th:name="keyword" th:value="${scri.keyword}" />
-            <input type="hidden" th:id="register" th:name="register" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
-            <div>
-                <label for="writer">댓글 작성자</label><input type="text" th:id="writer" th:name="writer" />
-                <br/>
-                <label for="content">댓글 내용</label><input type="text" th:id="content" th:name="content" />
-            </div>
-            <div>
-                <button type="submit" class="replyWriteBtn">작성</button>
-            </div>
-        </form>
-
+        <th:block th:if="${session.member != null}">
+            <form th:object="${replyForm}" method="post" th:name="replyForm">
+                <input type="hidden" th:id="BoardNumber" th:name="BoardNumber" th:value="${read?.BoardNumber}"/>
+                <input type="hidden" th:id="page" th:name="page" th:value="${scri.page}"/>
+                <input type="hidden" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}"/>
+                <input type="hidden" th:id="searchType" th:name="searchType" th:value="${scri.searchType}"/>
+                <input type="hidden" th:id="keyword" th:name="keyword" th:value="${scri.keyword}"/>
+                <input type="hidden" th:id="register" th:name="register"
+                       th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
+                <div>
+                    <label for="writer">댓글 작성자</label><input type="text" th:id="writer" th:name="writer"
+                                                             th:value="${session.member.ID}" readonly/>
+                    <br/>
+                    <label for="content">댓글 내용</label><input type="text" th:id="content" th:name="content"/>
+                </div>
+                <div>
+                    <button type="submit" class="replyWriteBtn">작성</button>
+                </div>
+            </form>
+        </th:block>
     </section>
-    <hr />
+    <hr/>
 </div>
 
 <script th:inline="javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         var formObj = $("form#readForm");
 
-        $(".update_btn").on("click", function(){
+        $(".update_btn").on("click", function () {
             formObj.attr("action", "/board/updateView");
             formObj.attr("method", "get");
             formObj.submit();
         })
 
-        $(".delete_btn").on("click", function(){
+        $(".delete_btn").on("click", function () {
             var deleteConfirm = confirm("삭제하시겠습니까?");
             if (deleteConfirm) {
                 formObj.attr("action", "/board/delete");
@@ -117,7 +141,7 @@
             }
         })
 
-        $(".list_btn").on("click", function(){
+        $(".list_btn").on("click", function () {
             var page = /*[[${scri.page}]]*/ '';
             var perPageNum = /*[[${scri.perPageNum}]]*/ '';
             var searchType = /*[[${scri.searchType}]]*/ '';
@@ -131,7 +155,7 @@
             location.href = url;
         })
 
-        $(".replyWriteBtn").on("click", function(){
+        $(".replyWriteBtn").on("click", function () {
             var formObj = $("form[name='replyForm']");
             formObj.attr("action", "/board/replyWrite");
             formObj.attr("method", "post");
@@ -159,7 +183,7 @@
         });
 
 
-        $(".replyDeleteBtn").on("click", function(){
+        $(".replyDeleteBtn").on("click", function () {
             var BoardNumber = /*[[${read.BoardNumber}]]*/ '';
             var page = /*[[${scri.page}]]*/ '';
             var perPageNum = /*[[${scri.perPageNum}]]*/ '';

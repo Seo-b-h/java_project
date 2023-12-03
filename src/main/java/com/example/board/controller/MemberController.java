@@ -64,7 +64,7 @@ public class MemberController {
     public String logout(HttpSession session) throws Exception {
         session.invalidate();
 
-        return "redirect:/";
+        return "redirect:/board/list";
     }
 
     @RequestMapping(value = "/memberUpdateView", method = RequestMethod.GET)
