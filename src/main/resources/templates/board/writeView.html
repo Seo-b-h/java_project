@@ -23,6 +23,7 @@
     <form role="form" name="writeForm" th:action="@{/board/write}" method="post">
       <table>
         <tbody>
+        <th:block th:if="${session.member != null}">
         <tr>
           <td>
             <label for="title">제목</label>
@@ -52,6 +53,10 @@
             <button type="button" class="write_btn">작성</button>
           </td>
         </tr>
+        </th:block>
+        <th:block th:if="${session.member == null}">
+          <p>로그인 후에 작성하실 수 있습니다.</p>
+        </th:block>
         </tbody>
       </table>
     </form>

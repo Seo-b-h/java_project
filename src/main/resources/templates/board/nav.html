@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,6 +9,15 @@
     <div>
         <a th:href="@{/board/list}">목록</a>
         <a th:href="@{/board/writeView}">글 작성</a>
+        <th:block th:if="${session.member != null}">
+            <a href="/member/logout">로그 아웃</a>
+        </th:block>
+        <th:block th:if="${session.member == null}">
+            <a href="/">로그인</a>
+        </th:block>
+        <th:block th:if="${session.member != null}">
+            <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+        </th:block>
     </div>
 </div>
 </body>
