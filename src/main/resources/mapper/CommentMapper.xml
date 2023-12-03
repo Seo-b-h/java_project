@@ -20,7 +20,7 @@
         SELECT
             COMMENTNUMBER, CONTENT, WRITER, REGISTER
         FROM COMMENT
-        WHERE BOARDNUMBER = #{boardNumber}
+        WHERE BOARDNUMBER = #{BoardNumber}
     </select>
 
     <!-- 댓글 작성 -->

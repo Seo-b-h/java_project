@@ -80,7 +80,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("게시판 수정 테스트") //통과
+    @DisplayName("게시판 수정 테스트") //통과 (UI완료)
     public void 게시판_수정() throws Exception
     {
         //given
@@ -95,7 +95,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("게시물 삭제 테스트") //통과
+    @DisplayName("게시물 삭제 테스트") //통과 (UI완료)
     public void 게시물_삭제() throws Exception
     {
         //given
@@ -109,7 +109,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("게시물 댓글 작성") //통과
+    @DisplayName("게시물 댓글 작성") //통과 (UI완료)
     public void 게시물_댓글_작성() throws Exception
     {
         //given
@@ -136,14 +136,14 @@ public class BoardTest {
     public void 댓글_수정() throws Exception
     {
         //given
-        Comment comment = new Comment(299, 306, "안녕~", "newWriter", LocalDate.now().toString());
+        Comment comment = new Comment(1, 1, "안녕~", "최민규", LocalDate.now().toString());
 
         //when
         commentService.updateComment(comment);
-        List<Comment> commentList = commentService.readComment(299);
+        List<Comment> commentList = commentService.readComment(1);
 
         //then
-        Assertions.assertThat(commentList.get(1).getContent()).isEqualTo("안녕~");
+        Assertions.assertThat(commentList.get(0).getContent()).isEqualTo("안녕~");
     }
 
     @Test

@@ -138,9 +138,8 @@ public class BoardController {
     @GetMapping(value = "/replyUpdateView")
     public String commentUpdateView(Comment co, SearchCriteria scri, Model model) throws Exception
     {
-        logger.info("reply Write");
+        logger.info("reply UpdateView");
 
-        logger.info(String.valueOf(co.getCommentNumber()));
         model.addAttribute("commentUpdate", commentService.selectComment(co.getCommentNumber()));
         model.addAttribute("scri", scri);
 
@@ -150,7 +149,7 @@ public class BoardController {
     @PostMapping(value = "/replyUpdate")
     public String commentUpdate(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
-        logger.info("reply Write");
+        logger.info("reply Update");
 
         commentService.updateComment(co);
 
@@ -170,7 +169,6 @@ public class BoardController {
 
         model.addAttribute("commentDelete", commentService.selectComment(co.getCommentNumber()));
         model.addAttribute("scri", scri);
-        //logger.info(String.valueOf(co.getCommentNumber()));
 
         return "board/replyDeleteView";
     }
