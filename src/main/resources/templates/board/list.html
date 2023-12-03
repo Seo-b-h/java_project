@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>게시판</title>
@@ -32,7 +34,7 @@
     </div>
     <hr/>
     <section id="container">
-        <table>
+        <table class="table table-hover">
             <tr>
                 <th>번호</th>
                 <th>제목</th>
@@ -52,17 +54,25 @@
             </tr>
         </table>
         <div class="search">
-            <select name="searchType" th:field="${scri.searchType}">
+            <div class="col-xs-2 col-sm-2">
+            <select name="searchType" class="form-control" th:field="${scri.searchType}">
                 <option value="n" th:selected="${scri.searchType == null}">-----</option>
                 <option value="t" th:selected="${scri.searchType == 't'}">제목</option>
                 <option value="c" th:selected="${scri.searchType == 'c'}">내용</option>
                 <option value="w" th:selected="${scri.searchType == 'w'}">작성자</option>
                 <option value="tc" th:selected="${scri.searchType == 'tc'}">제목+내용</option>
             </select>
+            </div>
 
-            <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>
+            <div class="col-xs-10 col-sm-10">
+                <div class="input-group">
+                    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}" class="form-control"/>
+                    <span class="input-group-btn">
+                        <button id="searchBtn" type="button" class="btn btn-default">검색</button>
+                    </span>
+                </div>
+            </div>
 
-            <button id="searchBtn" type="button">검색</button>
             <script th:inline="javascript">
                 $(document).ready(function () {
                     $('#searchBtn').click(function () {
@@ -75,14 +85,16 @@
             </script>
         </div>
 
-        <div>
-            <ul>
+        <div class="col-md-offset-3">
+            <ul class="pagination">
                 <th:block th:if="${pageMaker.prev}">
                     <li><a th:href="'list' + ${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
                 </th:block>
 
                 <th:block th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
-                    <li><a th:href="'list' + ${pageMaker.makeSearch(idx)}" th:text="${idx}"></a></li>
+                    <li th:class="${pageMaker.cri.page == idx} ? 'info' : ''">
+                        <a th:href="@{list/__${pageMaker.makeSearch(idx)}__}" th:text="${idx}"></a>
+                    </li>
                 </th:block>
 
                 <th:block th:if="${pageMaker.next &amp;&amp; pageMaker.endPage &gt; 0}">
