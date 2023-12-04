@@ -25,7 +25,7 @@
 
     <!-- 댓글 작성 -->
     <insert id="writeComment" parameterType="com.example.board.model.Comment">
-        INSERT INTO COMMENT(BOARDNUMBER, CONTENT, WRITER, REGISTER)
+        INSERT INTO COMMENT(BoardNumber, CONTENT, WRITER, REGISTER)
         VALUES(#{BoardNumber}, #{content}, #{writer}, #{register})
     </insert>
 

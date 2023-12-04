@@ -4,6 +4,7 @@ import com.example.board.model.*;
 import com.example.board.service.BoardService;
 import com.example.board.service.CommentService;
 import com.example.board.service.CommentServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller //@Controller + @ResponseBody = @RestController
@@ -49,10 +51,10 @@ public class BoardController {
     }
 
     @GetMapping(value = "/list")
-    public String list(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception
+    public String list(HttpSession session, Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception
     {
         logger.info("list");
-
+        session.setMaxInactiveInterval(36000);
         model.addAttribute("list", boardService.listPage(scri));
 
         PageMaker pageMaker = new PageMaker();

@@ -56,6 +56,7 @@ public class MemberController {
         }
         else {
             session.setAttribute("member", login);
+            session.setMaxInactiveInterval(36000);
         }
         return "redirect:/";
     }
@@ -63,7 +64,6 @@ public class MemberController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) throws Exception {
         session.invalidate();
-
         return "redirect:/board/list";
     }
 
