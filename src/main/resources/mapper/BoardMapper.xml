@@ -19,8 +19,8 @@
 
     <!-- include 태그로 동적 쿼리 구성 -->
     <select id="listPage" resultType="com.example.board.model.Board" parameterType="com.example.board.model.SearchCriteria">
-        SELECT Tb.BoardNumber, Tb.Title, Tb.Content, Tb.Writer, Tb.Register
-        FROM (SELECT BoardNumber, Title, Content, Writer, Register, ROW_NUMBER() OVER (ORDER BY BoardNumber DESC) AS RNUM
+        SELECT Tb.BoardNumber, Tb.Title, Tb.Content, Tb.Writer, Tb.Register, Tb.HIT
+        FROM (SELECT BoardNumber, Title, Content, Writer, Register, HIT, ROW_NUMBER() OVER (ORDER BY BoardNumber DESC) AS RNUM
               FROM BoardTb
               WHERE 1=1
               <include refid="search" ></include>
@@ -65,6 +65,12 @@
         FROM BoardTb
         WHERE BoardNumber = #{BoardNumber}
     </delete>
+
+    <update id="boardHit" parameterType="int">
+        UPDATE BoardTB
+        SET HIT = HIT + 1
+        WHERE BoardNumber = #{BoardNumber}
+    </update>
 
 </mapper>
 

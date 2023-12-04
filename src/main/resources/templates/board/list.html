@@ -38,6 +38,7 @@
                 <th>제목</th>
                 <th>작성자</th>
                 <th>등록일</th>
+                <th>조회수</th>
             </tr>
             <tr th:each="item : ${list}">
                 <td th:text="${item.BoardNumber}"></td>
@@ -49,6 +50,7 @@
                 </td>
                 <td th:text="${item.writer}"></td>
                 <td th:text="${item.register}"></td>
+                <td th:text="${item.hit}"></td>
             </tr>
         </table>
         <div class="search">

@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,11 +49,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Board read(int boardNumber) throws Exception
     {
+        boardMapper.boardHit(boardNumber);
         Board readBoard = boardMapper.read(boardNumber);
 
         return readBoard;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public void update(Board board) throws Exception
     {
@@ -63,5 +67,4 @@ public class BoardServiceImpl implements BoardService {
     {
         boardMapper.delete(bno);
     }
-
 }

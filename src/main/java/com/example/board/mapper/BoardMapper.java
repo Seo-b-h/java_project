@@ -23,4 +23,6 @@ public interface BoardMapper {
     public void update(Board board) throws Exception; //게시물 수정
 
     public void delete(int bno) throws Exception; //게시물 삭제
+
+    public void boardHit(int bno) throws Exception; // 게시물 조회수 증가
 }

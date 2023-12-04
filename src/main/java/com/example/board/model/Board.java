@@ -19,6 +19,7 @@ public class Board {
     private String content; //게시물 내용
     private String writer; //게시물 작성자
     private String register; //게시물 등록일자
+    private int hit;
 
     public Board(int BoardNumber, String title, String content, String writer, String date)
     {
