@@ -12,10 +12,6 @@
     <!-- resultMap : SELECT문 실행 결과를 담을 객체를 resultMap으로 지정 -->
     <!-- parameterType : 객체의 프로퍼티값이 SQL문의 입력 파라미터에 지정 -->
 
-    <select id="test" parameterType="map" resultType="Test">
-        SELECT 1 AS 'column1', 2 AS 'column2'
-    </select>
-
     <insert id="register" parameterType="com.example.board.model.Member">
         INSERT INTO member(ID, Password, name, Regdate, Telephone)
         VALUES (#{ID},#{Password},#{name},#{RegDate},#{telephone})
