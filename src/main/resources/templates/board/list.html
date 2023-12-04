@@ -6,12 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>게시판</title>
-    <style>
-        li {
-            list-style: none;
-            float: left;
-            padding: 6px;
-        }
+    <style type="text/css">
+        li {list-style: none; display:inline; padding: 6px;}
     </style>
 </head>
 <body>
@@ -21,16 +17,18 @@
     </header>
     <hr/>
     <div>
-        <a th:href="@{/board/list}">목록</a>
-        <a th:href="@{/board/writeView}">글 작성</a>
-        <th:block th:if="${session.member == null}">
-            <a th:href="@{/}">로그인</a>
-        </th:block>
-        <th:block th:if="${session.member != null}">
-            <a th:href="@{/}">회원 정보</a>
-            <a th:href="@{/member/logout}">로그 아웃</a>
-            <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
-        </th:block>
+        <ul>
+            <li><a th:href="@{/board/list}">목록</a></li>
+            <li><a th:href="@{/board/writeView}">글 작성</a></li>
+            <th:block th:if="${session.member == null}">
+                <li><a th:href="@{/}">로그인</a></li>
+            </th:block>
+            <th:block th:if="${session.member != null}">
+                <li><a th:href="@{/}">회원 정보</a></li>
+                <li><a th:href="@{/member/logout}">로그 아웃</a></li>
+                <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+            </th:block>
+        </ul>
     </div>
     <hr/>
     <section id="container">
