@@ -44,19 +44,19 @@
         </form>
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label">제목</label>
-            <input type="text" id="title" name="title" th:value="${read.title}" readonly="readonly"/>
+            <input type="text" id="title" name="title" class="form-control" th:value="${read.title}" readonly="readonly"/>
         </div>
         <div class="form-group">
             <label for="content" class="col-sm-2 control-label">내용</label>
-            <textarea id="content" name="content" readonly="readonly" th:text="${read.content}"></textarea>
+            <textarea id="content" name="content" class="form-control" readonly="readonly" th:text="${read.content}"></textarea>
         </div>
         <div class="form-group">
             <label for="writer" class="col-sm-2 control-label">작성자</label>
-            <input type="text" id="writer" name="writer" th:value="${read.writer}" readonly="readonly"/>
+            <input type="text" id="writer" name="writer" class="form-control" th:value="${read.writer}" readonly="readonly"/>
         </div>
         <div class="form-group">
             <label for="register" class="col-sm-2 control-label">작성날짜</label>
-            <input type="text" id="register" name="register" th:value="${read.register}" readonly="readonly"/>
+            <input type="text" id="register" name="register" class="form-control" th:value="${read.register}" readonly="readonly"/>
         </div>
 
         <div>
