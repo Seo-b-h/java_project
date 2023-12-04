@@ -1,0 +1,47 @@
+#CommunityTitle {
+    /*display: grid;*/
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+    font-size: 32px;
+    text-transform: uppercase;
+    padding: 5px;
+    /*margin-top:20px;*/
+    /*margin-bottom: 20px;*/
+    background: linear-gradient(to right, #8ca6ce, #3e1bb8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.list {
+    padding: 5px;
+    margin: 3px;
+    color: white;
+    background-color : #0d6efd;
+    border-radius: 0.25rem;
+}
+
+#buttonList > li {
+    list-style: none;
+    display: inline;
+    /*padding: 6px;*/
+    position:relative;
+}
+
+ul {
+    padding-inline-start: 0;
+    margin: 0;
+    height: 38px;
+}
+
+hr {
+    margin: 0;
+    background: #3e1bb8;
+    border: 0;
+    height: 1px;
+}
+
+header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

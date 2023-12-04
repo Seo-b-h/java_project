@@ -5,125 +5,148 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/Header.css">
+    <link rel="stylesheet" href="/css/Grid.css">
     <meta charset="UTF-8">
     <style type="text/css">
-        li {list-style: none; display:inline; padding: 6px;}
+        li {
+            list-style: none;
+            display: inline;
+            padding: 6px;
+        }
     </style>
     <title>게시판</title>
 </head>
 <body>
-<div class="container">
-    <header>
-        <h1>게시판</h1>
-    </header>
-    <hr/>
-
-    <div>
-        <ul>
-        <li><a th:href="@{/board/list}">목록</a></li>
-        <li><a th:href="@{/board/writeView}">글 작성</a></li>
-        <th:block th:if="${session.member == null}">
-            <li><a th:href="@{/}">로그인</a></li>
-        </th:block>
-        <th:block th:if="${session.member != null}">
-            <li><a th:href="@{/}">회원 정보</a></li>
-            <li><a th:href="@{/member/logout}">로그 아웃</a></li>
-            <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
-        </th:block>
-        </ul>
-    </div>
-    <hr/>
-
-    <section id="container">
-        <form id="readForm" th:action="@{/board/readView}" method="post">
-            <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}"/>
-            <input type="hidden" id="page" th:id="page" th:name="page" th:value="${scri.page}">
-            <input type="hidden" id="perPageNum" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}">
-            <input type="hidden" id="searchType" th:id="searchType" th:name="searchType" th:value="${scri.searchType}">
-            <input type="hidden" id="keyword" th:id="keyword" th:name="keyword" th:value="${scri.keyword}">
-        </form>
-        <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">제목</label>
-            <input type="text" id="title" name="title" class="form-control" th:value="${read.title}" readonly="readonly"/>
-        </div>
-        <div class="form-group">
-            <label for="content" class="col-sm-2 control-label">내용</label>
-            <textarea id="content" name="content" class="form-control" readonly="readonly" th:text="${read.content}"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="writer" class="col-sm-2 control-label">작성자</label>
-            <input type="text" id="writer" name="writer" class="form-control" th:value="${read.writer}" readonly="readonly"/>
-        </div>
-        <div class="form-group">
-            <label for="register" class="col-sm-2 control-label">작성날짜</label>
-            <input type="text" id="register" name="register" class="form-control" th:value="${read.register}" readonly="readonly"/>
-        </div>
-
-        <div>
-            <th:block th:if="${session.member != null} and ${session.member.ID == read.writer}">
-                <button type="button" class="update_btn btn btn-warning">수정</button>
-                <button type="button" class="delete_btn btn btn-danger">삭제</button>
+<div id="grid">
+    <div></div>
+    <div id="root">
+        <header style="margin-top: 20px;">
+            <a id="CommunityTitle" href="/board/list">게시판</a><br/>
+        </header>
+        <hr/>
+        <ul id="buttonList">
+            <li><a style="float:left" class="list" th:href="@{/board/list}">목록</a></li>
+            <li><a style="float:left" class="list" th:href="@{/board/writeView}">글 작성</a></li>
+            <th:block th:if="${session.member == null}">
+                <li><a style="float:right" class="list" th:href="@{/}">로그인</a></li>
+                <p style="padding: 5px; margin: 0;"></p>
             </th:block>
-            <button type="button" class="list_btn btn btn-primary">목록</button>
-        </div>
+            <th:block th:if="${session.member != null}">
+                <li><a style="float:right" class="list" th:href="@{/}">회원 정보</a></li>
+                <li><a style="float:right" class="list" th:href="@{/member/logout}">로그 아웃</a></li>
+                <div style="float:right">
+                    <p style="padding: 5px; color: #000000; font-weight: bold;  margin: 0;"
+                       th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+                </div>
+            </th:block>
+        </ul>
+        <hr style="clear:both;">
 
-        <!-- 댓글 -->
-        <div id="comment">
-            <ol class="commentList">
-                <li th:each="commentList : ${commentList}">
-                    <p>
-                        작성자 : <span th:text="${commentList.writer}"></span><br/>
-                        작성 날짜 : <span th:text="${commentList.register}"></span>
-                    </p>
-                    <p th:text="${commentList.content}"></p>
-                    <div>
-                        <th:block
-                                th:if="${session.member != null} and ${session.member.ID == commentList.writer}">
-                            <button type="button" class="replyUpdateBtn btn btn-warning"
-                                    th:attr="data-commentNumber=${commentList.commentNumber}">수정
-                            </button>
-                        </th:block>
-                        <th:block
-                                th:if="${session.member != null} and (${session.member.ID == commentList.writer} or ${session.member.ID == read.writer})">
-                            <button type="button" class="replyDeleteBtn btn btn-danger"
-                                    th:attr="data-commentNumber=${commentList.commentNumber}">삭제
-                            </button>
-                        </th:block>
-                    </div>
-                </li>
-            </ol>
-        </div>
-
-        <th:block th:if="${session.member != null}">
-            <form th:object="${replyForm}" method="post" class="form-horizontal" th:name="replyForm">
-                <input type="hidden" th:id="BoardNumber" th:name="BoardNumber" th:value="${read?.BoardNumber}"/>
-                <input type="hidden" th:id="page" th:name="page" th:value="${scri.page}"/>
-                <input type="hidden" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}"/>
-                <input type="hidden" th:id="searchType" th:name="searchType" th:value="${scri.searchType}"/>
-                <input type="hidden" th:id="keyword" th:name="keyword" th:value="${scri.keyword}"/>
-                <input type="hidden" th:id="register" th:name="register"
-                       th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
-                <div class="form-group">
-                    <label for="writer" class="col-sm-2 control-label">댓글 작성자</label>
-                    <div class="col-sm-10">
-                    <input type="text" th:id="writer" th:name="writer" th:value="${session.member.ID}" class="form-control" readonly/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">댓글 내용</label>
-                    <div class="col-sm-10">
-                    <input type="text" th:id="content" th:name="content" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="replyWriteBtn btn btn-success">작성</button>
-                    </div>
-                </div>
+        <section id="container">
+            <form id="readForm" th:action="@{/board/readView}" method="post">
+                <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${read.BoardNumber}"/>
+                <input type="hidden" id="page" th:id="page" th:name="page" th:value="${scri.page}">
+                <input type="hidden" id="perPageNum" th:id="perPageNum" th:name="perPageNum"
+                       th:value="${scri.perPageNum}">
+                <input type="hidden" id="searchType" th:id="searchType" th:name="searchType"
+                       th:value="${scri.searchType}">
+                <input type="hidden" id="keyword" th:id="keyword" th:name="keyword" th:value="${scri.keyword}">
             </form>
-        </th:block>
-    </section>
-    <hr/>
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">제목</label>
+                <input type="text" id="title" name="title" class="form-control" th:value="${read.title}"
+                       readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="content" class="col-sm-2 control-label">내용</label>
+                <textarea id="content" name="content" class="form-control" readonly="readonly"
+                          th:text="${read.content}"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="writer" class="col-sm-2 control-label">작성자</label>
+                <input type="text" id="writer" name="writer" class="form-control" th:value="${read.writer}"
+                       readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="register" class="col-sm-2 control-label">작성날짜</label>
+                <input type="text" id="register" name="register" class="form-control" th:value="${read.register}"
+                       readonly="readonly"/>
+            </div>
+
+            <div>
+                <button type="button" class="list_btn btn btn-primary">목록</button>
+                <th:block th:if="${session.member != null} and ${session.member.ID == read.writer}">
+                    <button type="button" class="update_btn btn btn-warning">수정</button>
+                    <button type="button" class="delete_btn btn btn-danger">삭제</button>
+                </th:block>
+            </div>
+
+            <!-- 댓글 -->
+            <div id="comment">
+                <ol class="commentList">
+                    <li th:each="commentList : ${commentList}">
+                        <hr>
+                        <div style="float: left">
+                            작성자 : <span th:text="${commentList.writer}"></span>
+                        </div>
+                        <div style="text-align: center">
+                            작성 날짜 : <span th:text="${commentList.register}"></span>
+                        </div>
+                        <div style="clear:both;">
+                            <span style="word-wrap: break-word;" th:text="${commentList.content}"></span>
+                        </div>
+                        <div>
+                            <th:block
+                                    th:if="${session.member != null} and ${session.member.ID == commentList.writer}">
+                                <button type="button" class="replyUpdateBtn btn btn-warning"
+                                        th:attr="data-commentNumber=${commentList.commentNumber}">수정
+                                </button>
+                            </th:block>
+                            <th:block
+                                    th:if="${session.member != null} and (${session.member.ID == commentList.writer} or ${session.member.ID == read.writer})">
+                                <button type="button" class="replyDeleteBtn btn btn-danger"
+                                        th:attr="data-commentNumber=${commentList.commentNumber}">삭제
+                                </button>
+                            </th:block>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <th:block th:if="${session.member != null}">
+                <form th:object="${replyForm}" method="post" class="form-horizontal" th:name="replyForm">
+                    <input type="hidden" th:id="BoardNumber" th:name="BoardNumber" th:value="${read?.BoardNumber}"/>
+                    <input type="hidden" th:id="page" th:name="page" th:value="${scri.page}"/>
+                    <input type="hidden" th:id="perPageNum" th:name="perPageNum" th:value="${scri.perPageNum}"/>
+                    <input type="hidden" th:id="searchType" th:name="searchType" th:value="${scri.searchType}"/>
+                    <input type="hidden" th:id="keyword" th:name="keyword" th:value="${scri.keyword}"/>
+                    <input type="hidden" th:id="register" th:name="register"
+                           th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
+                    <div class="form-group">
+                        <label for="writer" class="col-sm-2 control-label">댓글 작성자</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:id="writer" th:name="writer" th:value="${session.member.ID}"
+                                   class="form-control" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2 control-label">댓글 내용</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:id="content" th:name="content" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="replyWriteBtn btn btn-success">작성</button>
+                        </div>
+                    </div>
+                </form>
+            </th:block>
+        </section>
+        <hr/>
+    </div>
+    <div></div>
 </div>
 
 <script th:inline="javascript">

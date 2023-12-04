@@ -3,77 +3,76 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/Header.css">
+    <link rel="stylesheet" href="/css/Grid.css">
     <meta charset="UTF-8">
     <title>게시판</title>
     <!-- 최신 버전의 jQuery CDN 추가 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div id="root">
-    <header>
-        <h1>게시판</h1>
-    </header>
-    <hr/>
+<div id="grid">
+    <div></div>
+    <div id="root">
+        <header style="margin-top: 20px;">
+            <a id="CommunityTitle" href="/board/list">게시판</a><br/>
+        </header>
+        <hr/>
+        <ul id="buttonList">
+            <li><a style="float:left" class="list" th:href="@{/board/list}">목록</a></li>
+            <li><a style="float:left" class="list" th:href="@{/board/writeView}">글 작성</a></li>
+            <th:block th:if="${session.member == null}">
+                <li><a style="float:right" class="list" th:href="@{/}">로그인</a></li>
+                <p style="padding: 5px; margin: 0;"></p>
+            </th:block>
+            <th:block th:if="${session.member != null}">
+                <li><a style="float:right" class="list" th:href="@{/}">회원 정보</a></li>
+                <li><a style="float:right" class="list" th:href="@{/member/logout}">로그 아웃</a></li>
+                <div style="float:right">
+                    <p style="padding: 5px; color: #000000; font-weight: bold;  margin: 0;"
+                       th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+                </div>
+            </th:block>
+        </ul>
+        <hr style="clear:both;">
 
-    <div>
-        <a th:href="@{/board/list}">목록</a>
-        <a th:href="@{/board/writeView}">글 작성</a>
-        <th:block th:if="${session.member == null}">
-            <a th:href="@{/}">로그인</a>
-        </th:block>
-        <th:block th:if="${session.member != null}">
-            <a th:href="@{/}">회원 정보</a>
-            <a th:href="@{/member/logout}">로그 아웃</a>
-            <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
-        </th:block>
-    </div>
-    <hr/>
-
-    <section id="container">
-        <form role="form" name="writeForm" th:action="@{/board/write}" method="post">
-            <table>
-                <tbody>
-                <th:block th:if="${session.member != null}">
-                    <tr>
-                        <td>
-                            <label for="title">제목</label>
-                            <input type="text" id="title" name="title" class="chk" title="제목을 입력해주세요."/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="content">내용</label>
-                            <textarea id="content" name="content" class="chk" title="내용을 입력해주세요."></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="writer">작성자</label>
-                            <input type="text" id="writer" name="writer" class="chk" title="작성자를 입력해주세요."
+        <section id="container">
+            <form role="form" name="writeForm" th:action="@{/board/write}" method="post">
+                <table>
+                    <tbody>
+                    <th:block th:if="${session.member != null}">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">제목</label>
+                            <input type="text" id="title" name="title" class="form-control" title="제목을 입력해주세요."/>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-sm-2 control-label">내용</label>
+                            <textarea id="content" name="content" class="form-control" title="내용을 입력해주세요."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="writer" class="col-sm-2 control-label">작성자</label>
+                            <input type="text" id="writer" name="writer" class="form-control" title="작성자를 입력해주세요."
                                    th:value="${session.member.ID}" readonly/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                        </div>
+                        <div class="form-group">
                             <!-- hidden input으로 현재 날짜를 전달 -->
                             <input type="hidden" id="register" name="register"
                                    th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                        </div>
+                        <div>
                             <button type="button" class="write_btn">작성</button>
-                        </td>
-                    </tr>
-                </th:block>
-                <th:block th:if="${session.member == null}">
-                    <p>로그인 후에 작성하실 수 있습니다.</p>
-                </th:block>
-                </tbody>
-            </table>
-        </form>
-    </section>
-    <hr/>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${session.member == null}">
+                        <p>로그인 후에 작성하실 수 있습니다.</p>
+                    </th:block>
+                    </tbody>
+                </table>
+            </form>
+        </section>
+        <hr/>
+    </div>
+    <div></div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -89,10 +88,10 @@
     })
 
     function fn_valiChk() {
-        var regForm = $("form[name='writeForm'] .chk").length;
+        var regForm = $("form[name='writeForm'] .form-control").length;
         for (var i = 0; i < regForm; i++) {
-            if ($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null) {
-                alert($(".chk").eq(i).attr("title"));
+            if ($(".form-control").eq(i).val() == "" || $(".form-control").eq(i).val() == null) {
+                alert($(".form-control").eq(i).attr("title"));
                 return true;
             }
         }

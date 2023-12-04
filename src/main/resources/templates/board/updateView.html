@@ -5,67 +5,69 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/Header.css">
+    <link rel="stylesheet" href="/css/Grid.css">
     <meta charset="UTF-8">
     <title>게시판</title>
 </head>
 <body>
-<div id="root">
-    <header>
-        <h1>게시판</h1>
-    </header>
-    <hr/>
+<div id="grid">
+    <div></div>
+    <div id="root">
+        <header style="margin-top: 20px;">
+            <a id="CommunityTitle" href="/board/list">게시판</a><br/>
+        </header>
+        <hr/>
+        <ul id="buttonList">
+            <li><a style="float:left" class="list" th:href="@{/board/list}">목록</a></li>
+            <li><a style="float:left" class="list" th:href="@{/board/writeView}">글 작성</a></li>
+            <th:block th:if="${session.member == null}">
+                <li><a style="float:right" class="list" th:href="@{/}">로그인</a></li>
+                <p style="padding: 5px; margin: 0;"></p>
+            </th:block>
+            <th:block th:if="${session.member != null}">
+                <li><a style="float:right" class="list" th:href="@{/}">회원 정보</a></li>
+                <li><a style="float:right" class="list" th:href="@{/member/logout}">로그 아웃</a></li>
+                <div style="float:right">
+                    <p style="padding: 5px; color: #000000; font-weight: bold;  margin: 0;"
+                       th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+                </div>
+            </th:block>
+        </ul>
+        <hr style="clear:both;">
 
-    <div>
-        <a th:href="@{/board/list}">목록</a>
-        <a th:href="@{/board/writeView}">글 작성</a>
-        <a th:href="@{/}">회원 정보</a>
-        <a th:href="@{/member/logout}">로그 아웃</a>
-        <p th:text="${session.member.ID}+'님 안녕하세요.'"></p>
+        <section id="container">
+            <form id="updateForm" th:action="@{/board/update}" method="post">
+                <input type="hidden" name="BoardNumber" th:value="${update.BoardNumber}" readonly="readonly"/>
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">제목</label>
+                    <input type="text" id="title" name="title" th:value="${update.title}" class="form-control"
+                           title="제목을 입력하세요"/>
+                </div>
+                <div class="form-group">
+                    <label for="content" class="col-sm-2 control-label">내용</label>
+                    <textarea id="content" name="content" th:text="${update.content}" class="form-control"
+                              title="내용을 입력하세요"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="writer" class="col-sm-2 control-label">작성자</label>
+                    <input type="text" id="writer" name="writer" th:value="${update.writer}" class="form-control"
+                           readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                    <label for="register" class="col-sm-2 control-label">작성날짜</label>
+                    <input type="text" id="register" name="register" class="form-control"
+                           th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly="readonly"/>
+                </div>
+                <div>
+                    <button type="submit" class="update_btn">저장</button>
+                    <button type="button" class="cancel_btn">취소</button>
+                </div>
+            </form>
+        </section>
+        <hr/>
     </div>
-    <hr/>
-
-    <section id="container">
-        <form id="updateForm" th:action="@{/board/update}" method="post">
-            <input type="hidden" name="BoardNumber" th:value="${update.BoardNumber}" readonly="readonly"/>
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        <label for="title">제목</label>
-                        <input type="text" id="title" name="title" th:value="${update.title}" class="chk"
-                               title="제목을 입력하세요"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="content">내용</label>
-                        <textarea id="content" name="content" th:text="${update.content}" class="chk"
-                                  title="내용을 입력하세요"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="writer">작성자</label>
-                        <input type="text" id="writer" name="writer" th:value="${update.writer}"
-                               readonly="readonly"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="register">작성날짜</label>
-                        <input type="text" id="register" name="register"
-                               th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div>
-                <button type="submit" class="update_btn">저장</button>
-                <button type="button" class="cancel_btn">취소</button>
-            </div>
-        </form>
-    </section>
-    <hr/>
+    <div></div>
 </div>
 
 <script th:inline="javascript">
@@ -96,10 +98,10 @@
     })
 
     function fn_valiChk() {
-        var updateForm = $("form[name='updateForm'] .chk").length;
+        var updateForm = $("form[name='updateForm'] .form-control").length;
         for (var i = 0; i < updateForm; i++) {
-            if ($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null) {
-                alert($(".chk").eq(i).attr("title"));
+            if ($(".form-control").eq(i).val() == "" || $(".form-control").eq(i).val() == null) {
+                alert($(".form-control").eq(i).attr("title"));
                 return true;
             }
         }
