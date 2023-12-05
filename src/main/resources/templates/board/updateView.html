@@ -41,27 +41,27 @@
                 <input type="hidden" name="BoardNumber" th:value="${update.BoardNumber}" readonly="readonly"/>
                 <div class="form-group">
                     <label for="title" class="col-sm-2 control-label">제목</label>
-                    <input type="text" id="title" name="title" th:value="${update.title}" class="form-control"
+                    <input type="text" id="title" name="title" th:value="${update.title}" class="chk form-control"
                            title="제목을 입력하세요"/>
                 </div>
                 <div class="form-group">
                     <label for="content" class="col-sm-2 control-label">내용</label>
-                    <textarea id="content" name="content" th:text="${update.content}" class="form-control"
+                    <textarea id="content" name="content" th:text="${update.content}" class="chk form-control"
                               title="내용을 입력하세요"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="writer" class="col-sm-2 control-label">작성자</label>
-                    <input type="text" id="writer" name="writer" th:value="${update.writer}" class="form-control"
+                    <input type="text" id="writer" name="writer" th:value="${update.writer}" class=" chk form-control"
                            readonly="readonly"/>
                 </div>
                 <div class="form-group">
                     <label for="register" class="col-sm-2 control-label">작성날짜</label>
-                    <input type="text" id="register" name="register" class="form-control"
+                    <input type="text" id="register" name="register" class="chk form-control"
                            th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly="readonly"/>
                 </div>
                 <div>
-                    <button type="submit" class="update_btn">저장</button>
-                    <button type="button" class="cancel_btn">취소</button>
+                    <button type="submit" class="update_btn btn btn-success">저장</button>
+                    <button type="button" class="cancel_btn btn btn-danger">취소</button>
                 </div>
             </form>
         </section>
@@ -98,10 +98,10 @@
     })
 
     function fn_valiChk() {
-        var updateForm = $("form[name='updateForm'] .form-control").length;
+        var updateForm = $("form[name='updateForm'] .chk").length;
         for (var i = 0; i < updateForm; i++) {
-            if ($(".form-control").eq(i).val() == "" || $(".form-control").eq(i).val() == null) {
-                alert($(".form-control").eq(i).attr("title"));
+            if ($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null) {
+                alert($(".chk").eq(i).attr("title"));
                 return true;
             }
         }

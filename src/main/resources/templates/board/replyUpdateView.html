@@ -43,19 +43,14 @@
                 <input type="hidden" id="perPageNum" name="perPageNum" th:value="${scri.perPageNum}">
                 <input type="hidden" id="searchType" name="searchType" th:value="${scri.searchType}">
                 <input type="hidden" id="keyword" name="keyword" th:value="${scri.keyword}">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <label for="content">댓글 내용</label><input type="text" id="content" name="content"
-                                                                     th:value="${commentUpdate.content}"/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <label for="content" class="col-sm-2 control-label">댓글 내용</label>
+                    <input type="text" id="content" name="content" class="form-control"
+                           th:value="${commentUpdate.content}"/>
+                </div>
                 <div>
-                    <button type="submit" class="update_btn">저장</button>
-                    <button type="button" class="cancel_btn"
+                    <button type="submit" class="update_btn btn btn-success">저장</button>
+                    <button type="button" class="cancel_btn btn btn-danger"
                             th:onclick="|window.location.href='@{/board/readView(BoardNumber=${commentUpdate.BoardNumber},page=${scri.page},perPageNum=${scri.perPageNum},searchType=${scri.searchType},keyword=${scri.keyword})}'|">
                         취소
                     </button>
