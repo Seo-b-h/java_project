@@ -11,11 +11,11 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class Comment {
 
-    private int BoardNumber;
-    private int commentNumber;
-    private String content;
-    private String writer;
-    private String register;
+    private int BoardNumber; //게시물 번호
+    private int commentNumber; //댓글 번호
+    private String content; //댓글 내용
+    private String writer; //댓글 작성자
+    private String register; //댓글 등록일
 
     public Comment(int BoardNumber, String content, String writer, String register)
     {

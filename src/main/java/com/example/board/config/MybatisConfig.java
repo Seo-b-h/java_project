@@ -64,4 +64,13 @@ public class MybatisConfig {
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
+
+    //spring boot는 미리 설정되어있는 bean이다
+//    @Bean
+//    public CommonsMultipartResolver multipartResolver() {
+//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//        multipartResolver.setMaxUploadSize(100000000); // 최대 업로드 크기 설정 (바이트 단위)
+//        multipartResolver.setMaxInMemorySize(100000000); // 메모리에 저장되는 최대 크기 설정 (바이트 단위)
+//        return multipartResolver;
+//    }
 }

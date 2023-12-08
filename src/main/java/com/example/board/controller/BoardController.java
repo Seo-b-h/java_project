@@ -28,14 +28,15 @@ public class BoardController {
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
     //로그를 info 레벨로 출력
 
-    private final BoardService boardService;
+    private final BoardService boardService; //게시판 서비스
 
-    private final CommentService commentService;
+    private final CommentService commentService; //댓글 서비스
 
     //model.addAttribute() : Controller에서 생성된 데이터를 Model 객체를 통해 View로 전달
     @GetMapping(value = "/writeView")
     public String writeView() throws Exception
     {
+        //게시글 작성 화면
         logger.info("writeView");
 
         return "board/writeView";
@@ -44,6 +45,7 @@ public class BoardController {
     @PostMapping(value = "/write")
     public String write(Board board) throws Exception
     {
+        //게시글 작성
         logger.info("write");
         boardService.write(board);
 
@@ -53,6 +55,7 @@ public class BoardController {
     @GetMapping(value = "/list")
     public String list(HttpSession session, Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception
     {
+        //게시물 목록 화면
         logger.info("list");
         session.setMaxInactiveInterval(36000);
         model.addAttribute("list", boardService.listPage(scri));
@@ -69,6 +72,7 @@ public class BoardController {
     @GetMapping(value = "/readView")
     public String read(Board board, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception
     {
+        //게시물 내용 화면
         logger.info("read");
 
         model.addAttribute("read", boardService.read(board.getBoardNumber()));
@@ -83,6 +87,7 @@ public class BoardController {
     @GetMapping(value = "/updateView")
     public String updateView(Board board, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception
     {
+        //게시물 수정 화면
         logger.info("updateView");
 
         model.addAttribute("update", boardService.read(board.getBoardNumber()));
@@ -94,6 +99,7 @@ public class BoardController {
     @PostMapping(value = "/update")
     public String update(Board board, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
+        //게시물 수정
         logger.info("update");
 
         boardService.update(board);
@@ -109,6 +115,7 @@ public class BoardController {
     @PostMapping(value = "/delete")
     public String delete(Board board, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
+        //게시물 삭제
         logger.info("delete");
 
         boardService.delete(board.getBoardNumber());
@@ -124,6 +131,7 @@ public class BoardController {
     @PostMapping(value = "/replyWrite")
     public String writeComment(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
+        //댓글 작성
         logger.info("comment Write");
 
         commentService.writeComment(co);
@@ -140,6 +148,7 @@ public class BoardController {
     @GetMapping(value = "/replyUpdateView")
     public String commentUpdateView(Comment co, SearchCriteria scri, Model model) throws Exception
     {
+        //댓글 수정 화면
         logger.info("reply UpdateView");
 
         model.addAttribute("commentUpdate", commentService.selectComment(co.getCommentNumber()));
@@ -151,6 +160,7 @@ public class BoardController {
     @PostMapping(value = "/replyUpdate")
     public String commentUpdate(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
+        //댓글 수정
         logger.info("reply Update");
 
         commentService.updateComment(co);
@@ -167,6 +177,7 @@ public class BoardController {
     @GetMapping(value = "/replyDeleteView")
     public String commentDeleteView(Comment co, SearchCriteria scri, Model model) throws Exception
     {
+        //댓글 삭제 화면
         logger.info("reply Write");
 
         model.addAttribute("commentDelete", commentService.selectComment(co.getCommentNumber()));
@@ -178,6 +189,7 @@ public class BoardController {
     @PostMapping(value = "/replyDelete")
     public String commentDelete(Comment co, SearchCriteria scri, RedirectAttributes rttr) throws Exception
     {
+        //댓글 삭제
         logger.info("reply Write");
 
         commentService.deleteComment(co);

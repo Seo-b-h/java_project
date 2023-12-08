@@ -97,7 +97,7 @@
 
                     <th:block th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
                         <li th:class="${pageMaker.cri.page == idx} ? 'info' : ''">
-                            <a th:href="@{list/__${pageMaker.makeSearch(idx)}__}" th:text="${idx}"></a>
+                            <a th:href="@{list + ${pageMaker.makeSearch(idx)}}" th:text="${idx}"></a>
                         </li>
                     </th:block>
 

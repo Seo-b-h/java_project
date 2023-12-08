@@ -8,10 +8,10 @@ import lombok.ToString;
 public class Criteria {
     //게시물 페이징 구현을 위한 객체
 
-    private int page;
-    private int perPageNum;
-    private int rowStart;
-    private int rowEnd;
+    private int page; //현재 페이지
+    private int perPageNum; //rowStart ~ rowEnd의 범위 설정
+    private int rowStart; //첫번째 페이지 번호
+    private int rowEnd; //마지막 페이지 번호
 
     public Criteria()
     {

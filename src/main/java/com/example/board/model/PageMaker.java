@@ -15,12 +15,12 @@ import java.net.URLEncoder;
 public class PageMaker {
     //게시판 한 페이지를 구성하는 객체
 
-    private int totalCount;
-    private int startPage;
-    private int endPage;
-    private boolean prev;
-    private boolean next;
-    private int displayPageNum = 10;
+    private int totalCount; //게시물 총 개수
+    private int startPage; //첫 페이지
+    private int endPage; //마지막 페이지
+    private boolean prev; //이전번호의 페이지가 있는지
+    private boolean next; //다음번호의 페이지가 있는지
+    private int displayPageNum = 10; //한 페이지에 보여줄 게시물의 수
     private Criteria cri;
 
     public void setCri(Criteria cri) {
