@@ -1,13 +1,13 @@
-<!--BoardMapper.xml-->
-<!--Programmed by 최민규-->
-<!--마이바티스 문법으로 구현된 글 관련 SQL 구문이 존재하는 SQL Mapper 파일이다.-->
-<!--Date : 2023.11.28.-->
-<!--Last Update : 2023.11.28.-->
-<!--Major update content : Source code 최초 작성 by 최민규-->
-<!--Last Update : 2023.12.04.-->
-<!--Major update content : 글 조회시 조회수 증가 기능 SQL문 추가 by 서보혁-->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- BoardMapper.xml -->
+<!-- Programmed by 최민규 -->
+<!-- 마이바티스 문법으로 구현된 글 관련 SQL 구문이 존재하는 SQL Mapper 파일이다. -->
+<!-- Date : 2023.11.28. -->
+<!-- Last Update : 2023.11.28. -->
+<!-- Major update content : Source code 최초 작성 by 최민규 -->
+<!-- Last Update : 2023.12.04. -->
+<!-- Major update content : 글 조회시 조회수 증가 기능 SQL문 추가 by 서보혁 -->
 <!-- 태그 규칙을 정의한 DTD 선언 => XML 파일이 어떤 구조와 어떤 element, 어떤 attributes를 가지는지 정의하는 것 -->
 
 <!-- SQL 구문이 존재하는 SQL Mapper 파일 -->
