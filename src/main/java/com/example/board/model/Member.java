@@ -1,3 +1,11 @@
+/** Member.java */
+/*
+ * Programmed by 서보혁
+ * 회원 정보들을 저장할 수 있는 클래스에 관한 소스 코드이다.
+ * Date : 2023.12.01.
+ * Last Update : 2023.12.01.
+ * Major update content : Source code 최초 작성 by 서보혁
+ */
 package com.example.board.model;
 
 import lombok.*;
@@ -8,11 +16,11 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Member {
+public class Member { // 회원 정보를 저장할 수 있는 클래스
     private String ID;
     private String Password;
     private String name;
-    private String RegDate;
+    private String RegDate; // 회원 가입 날짜
     private String telephone;
 
     public Member(String ID, String Password, String name, String RegDate, String telephone) {

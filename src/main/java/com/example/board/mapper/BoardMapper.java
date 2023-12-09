@@ -1,3 +1,13 @@
+/** BoardMapper.java */
+/*
+ * Programmed by 최민규
+ * DB에 접근해야 하는 메소드들 중 글과 관련된 메소드들을 생성해놓은 소스 파일이다.
+ * Date : 2023.11.28.
+ * Last Update : 2023.11.28.
+ * Major update content : Source code 최초 작성 by 최민규
+ * * Last Update : 2023.12.04.
+ * Major update content : 게시물 조회 시 조회수 증가 함수 추가 by 서보혁
+ */
 package com.example.board.mapper;
 
 import com.example.board.model.Board;

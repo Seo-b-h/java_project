@@ -1,3 +1,13 @@
+/** BoardController.java */
+/*
+ * Programmed by 최민규
+ * 사용자가 서비스를 요청 시 요청을 처리하고 결과나 결과 페이지를 반환해주는 역할을 하는 소스 코드이다.
+ * Date : 2023.11.28.
+ * Last Update : 2023.11.28.
+ * Major update content : Source code 최초 작성 by 최민규
+ * * Last Update : 2023.12.04.
+ * Major update content : 회원이 글 목록 접속 시 세션 시간 초기화 기능 추가 by 서보혁
+ */
 package com.example.board.controller;
 
 import com.example.board.model.*;

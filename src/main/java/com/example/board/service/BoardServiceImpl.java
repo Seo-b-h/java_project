@@ -1,3 +1,13 @@
+/** BoardServiceImpl.java */
+/*
+ * Programmed by 최민규
+ * 글 작성에 관한 서비스의 구현을 해놓은 클래스이다.
+ * Date : 2023.11.28.
+ * Last Update : 2023.11.28.
+ * Major update content : Source code 최초 작성 by 최민규
+ * * Last Update : 2023.12.04.
+ * Major update content : 글 조회 시 조회수 증가 기능 추가 by 서보혁
+ */
 package com.example.board.service;
 
 import com.example.board.controller.BoardController;

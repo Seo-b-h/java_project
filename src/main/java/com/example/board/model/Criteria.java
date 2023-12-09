@@ -1,3 +1,11 @@
+/** Criteria.java */
+/*
+ * Programmed by 최민규
+ * 게시물 페이징 정보들을 저장할 수 있는 클래스에 관한 소스 코드이다.
+ * Date : 2023.11.28.
+ * Last Update : 2023.11.28.
+ * Major update content : Source code 최초 작성 by 최민규
+ */
 package com.example.board.model;
 
 import lombok.Getter;
