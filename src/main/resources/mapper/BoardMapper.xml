@@ -35,7 +35,7 @@
             <if test="searchType == 't'.toString()">AND TITLE LIKE CONCAT('%',#{keyword},'%')</if>
             <if test="searchType == 'c'.toString()">AND CONTENT LIKE CONCAT('%',#{keyword},'%')</if>
             <if test="searchType == 'w'.toString()">AND WRITER LIKE CONCAT('%',#{keyword},'%')</if>
-            <if test="searchType == 'tc'.toString()">AND (TITLE LIKE CONCAT('%',#{keyword},'%') or (CONTENT LIKE CONCAT('%',#{keyword},'%'))</if>
+            <if test="searchType == 'tc'.toString()">AND (TITLE LIKE CONCAT('%',#{keyword},'%')) OR (CONTENT LIKE CONCAT('%',#{keyword},'%'))</if>
         </if>
     </sql>
 
