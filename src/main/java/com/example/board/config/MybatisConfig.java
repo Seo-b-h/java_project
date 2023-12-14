@@ -1,3 +1,11 @@
+/** MybatisConfig.java */
+/*
+ * Programmed by 최민규
+ * 데이터베이스와의 연결을 MyBatis로 설정하는데 쓰이는 소스 코드이다.
+ * Date : 2023.11.28.
+ * Last Update : 2023.11.28.
+ * Major update content : Source code 최초 작성
+ */
 package com.example.board.config;
 
 import lombok.RequiredArgsConstructor;

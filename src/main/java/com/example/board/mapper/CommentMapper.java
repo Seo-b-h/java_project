@@ -1,3 +1,11 @@
+/** CommentMapper.java */
+/*
+ * Programmed by 최민규
+ * DB에 접근해야 하는 메소드들 중 댓글에 관한 메소드들을 생성해놓은 소스 파일이다.
+ * Date : 2023.11.28.
+ * Last Update : 2023.11.28.
+ * Major update content : Source code 최초 작성 by 최민규
+ */
 package com.example.board.mapper;
 
 import com.example.board.model.Comment;

@@ -1,3 +1,11 @@
+/** Header.css */
+/*
+ * Programmed by 서보혁
+ * 페이지 헤더 색상과 모양에 관한 것을 정의해놓은 css 파일이다.
+ * Date : 2023.12.04.
+ * Last Update : 2023.12.04.
+ * Major update content : code 최초 작성 by 서보혁
+ */
 #CommunityTitle {
     /*display: grid;*/
     text-align: center;
