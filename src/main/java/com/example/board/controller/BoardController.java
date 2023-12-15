@@ -9,6 +9,8 @@
  * Major update content : 회원이 글 목록 접속 시 세션 시간 초기화 기능 추가 by 서보혁
  * Last Update : 2023.12.15.
  * Major update content : write 메소드 파일 업로드 기능 추가, read 메소드 파일 조회 기능 추가 by 서보혁
+ * Last Update : 2023.12.16.
+ * Major update content : 파일 다운로드 함수 추가 by 서보혁
  */
 package com.example.board.controller;
 
@@ -16,6 +18,7 @@ import com.example.board.model.*;
 import com.example.board.service.BoardService;
 import com.example.board.service.CommentService;
 import com.example.board.service.CommentServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -26,7 +29,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.lang.reflect.Member;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -215,5 +220,22 @@ public class BoardController {
         rttr.addAttribute("keyword", scri.getKeyword());
 
         return "redirect:/board/readView";
+    }
+
+    @RequestMapping(value="/fileDown")
+    public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
+        //logger.info("fileDown : {}", map);
+        Map<String, Object> resultMap = boardService.selectFileInfo(map);
+        String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+        String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+
+        byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\mp\\file\\"+storedFileName));
+
+        response.setContentType("application/octet-stream");
+        response.setContentLength(fileByte.length);
+        response.setHeader("Content-Disposition", "attachment; fileName=\""+ URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+        response.getOutputStream().write(fileByte);
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
     }
 }

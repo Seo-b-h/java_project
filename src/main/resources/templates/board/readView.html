@@ -14,6 +14,8 @@
  * Major update content : 부트 스트랩 및 css 적용 by 서보혁
  * Last Update : 2023.12.15.
  * Major update content : 파일 조회 기능 추가 by 서보혁
+ * Last Update : 2023.12.16.
+ * Major update content : 파일 다운로드 기능 추가 by 서보혁
  */
 -->
 <!DOCTYPE html>
@@ -70,6 +72,7 @@
                 <input type="hidden" id="searchType" th:id="searchType" th:name="searchType"
                        th:value="${scri.searchType}">
                 <input type="hidden" id="keyword" th:id="keyword" th:name="keyword" th:value="${scri.keyword}">
+                <input type="hidden" id="FILE_NO" name="FILE_NO" value="">
             </form>
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label">제목</label>
@@ -93,11 +96,9 @@
             </div>
             <span>파일 목록</span>
             <div class="form-group" style="border: 1px solid #dbdbdb;">
-                <!--<label for="register" class="col-sm-2 control-label">작성날짜</label>-->
-                <!--<input type="text" id="register" name="register" class="form-control" th:value="${read.register}"
-                       readonly="readonly"/>-->
-                <th:block th:each="file : ${file}">
-                    <a href="#" onclick="fn_fileDown('$(file.FILE_NO)'); return false;" th:text="${file.ORG_FILE_NAME}"></a><th:block th:text="'('+${file.FILE_SIZE}+'kb)'"></th:block><br>
+                <th:block th:each="f : ${file}">
+                    <!--<a href="#" onclick="fn_fileDown(${file.FILE_NO}); return false;" th:text="${file.ORG_FILE_NAME}"></a><th:block th:text="'('+${file.FILE_SIZE}+'kb)'"></th:block><br>-->
+                    <a href="#" th:FILE_NO="${f.FILE_NO}" th:onclick="fn_fileDown(this.getAttribute('FILE_NO'))" th:text="${f.ORG_FILE_NAME}"></a><th:block th:text="'('+${f.FILE_SIZE}+'kb)'"></th:block><br>
                 </th:block>
             </div>
             <div>
@@ -254,6 +255,12 @@
             location.href = url;
         });
     })
+    function fn_fileDown(fileNo) {
+        let formObj = $("#readForm");
+        $('#FILE_NO').attr("value",fileNo);
+        formObj.attr("action", "/board/fileDown");
+        formObj.submit();
+    }
 </script>
 
 </body>

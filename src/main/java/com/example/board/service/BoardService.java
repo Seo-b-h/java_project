@@ -7,6 +7,8 @@
  * Major update content : Source code 최초 작성 by 최민규
  * Last Update : 2023.12.15.
  * Major update content : write 함수 파일 업로드, 조회 기능 추가 by 서보혁
+ * Last Update : 2023.12.16.
+ * Major update content : 파일 번호 조회 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
@@ -35,5 +37,7 @@ public interface BoardService {
     public void delete(int bno) throws Exception;
 
     public List<Map<String, Object>> selectFileList(int BoardNumber) throws Exception;
+
+    public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;
 
 }
