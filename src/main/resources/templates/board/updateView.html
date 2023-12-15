@@ -10,6 +10,8 @@
  * Major update content : 글 작성자만 글 수정을 할 수 있도록 수정 by 서보혁
  * Last Update : 2023.12.05.
  * Major update content : 부트 스트랩 및 css 적용 by 서보혁
+ * Last Update : 2023.12.16.
+ * Major update content : 파일 업로드 관련 기능 추가 by 서보혁
  */
 -->
 <!DOCTYPE html>
@@ -51,32 +53,53 @@
         <hr style="clear:both;">
 
         <section id="container">
-            <form id="updateForm" th:action="@{/board/update}" method="post">
-                <input type="hidden" name="BoardNumber" th:value="${update.BoardNumber}" readonly="readonly"/>
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">제목</label>
-                    <input type="text" id="title" name="title" th:value="${update.title}" class="chk form-control"
-                           title="제목을 입력하세요"/>
-                </div>
-                <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">내용</label>
-                    <textarea id="content" name="content" th:text="${update.content}" class="chk form-control"
-                              title="내용을 입력하세요"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="writer" class="col-sm-2 control-label">작성자</label>
-                    <input type="text" id="writer" name="writer" th:value="${update.writer}" class=" chk form-control"
-                           readonly="readonly"/>
-                </div>
-                <div class="form-group">
-                    <label for="register" class="col-sm-2 control-label">작성날짜</label>
-                    <input type="text" id="register" name="register" class="chk form-control"
-                           th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly="readonly"/>
-                </div>
-                <div>
-                    <button type="submit" class="update_btn btn btn-success">저장</button>
-                    <button type="button" class="cancel_btn btn btn-danger">취소</button>
-                </div>
+            <form id="updateForm" th:action="@{/board/update}" method="post" enctype="multipart/form-data">
+                <table>
+                    <tbody>
+                    <input type="hidden" name="BoardNumber" th:value="${update.BoardNumber}" readonly="readonly"/>
+                    <input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""/>
+                    <input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""/>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">제목</label>
+                        <input type="text" id="title" name="title" th:value="${update.title}" class="chk form-control"
+                               title="제목을 입력하세요"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2 control-label">내용</label>
+                        <textarea id="content" name="content" th:text="${update.content}" class="chk form-control"
+                                  title="내용을 입력하세요"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="writer" class="col-sm-2 control-label">작성자</label>
+                        <input type="text" id="writer" name="writer" th:value="${update.writer}"
+                               class=" chk form-control"
+                               readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="register" class="col-sm-2 control-label">작성날짜</label>
+                        <input type="text" id="register" name="register" class="chk form-control"
+                               th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly="readonly"/>
+                    </div>
+                    <div>
+                        <button type="submit" class="update_btn btn btn-success">저장</button>
+                        <button type="button" class="cancel_btn btn btn-danger">취소</button>
+                        <button type="button" class="fileAdd_btn btn btn-info">파일 추가</button>
+                    </div>
+
+                    <th:block th:each="f : ${file}">
+                            <div class="form-group">
+                                <input type="hidden" id="FILE_NO" th:name="FILE_NO_+${fStat.index}" th:value="${f.FILE_NO}">
+                                <input type="hidden" style='float:right;' id="FILE_NAME" name="FILE_NAME" th:value="FILE_NO_+${fStat.index}">
+                                <a href="#" id="fileName" th:text="${f.ORG_FILE_NAME}" onclick="return false;"></a>
+                                <th:block th:text="'('+${f.FILE_SIZE}+'kb)'"></th:block>
+                                <button class='btn-danger' type='button' style='float:right;' id='fileDelBtn'
+                                        th:onclick="|fn_del('${f.FILE_NO}', 'FILE_NO_'+'${fStat.index}')|">삭제
+                                </button>
+                                </div>
+                    </th:block>
+                    <div id="fileIndex"></div>
+                    </tbody>
+                </table>
             </form>
         </section>
         <hr/>
@@ -119,6 +142,24 @@
                 return true;
             }
         }
+    }
+
+    let fileIndex = 1;
+    $(".fileAdd_btn").on("click", function () {
+        $("#fileIndex").append("<div class='form-group'><input type='file' style='float:left;' name='file_" + (fileIndex++) + "'>" + "<button class='btn-danger' type='button' style='float:right;' id='fileDelBtn'>" + "삭제" + "</button><br></div>");
+    });
+    $(document).on("click", "#fileDelBtn", function () {
+        $(this).parent().remove();
+
+    });
+    let fileNoArry = new Array();
+    let fileNameArry = new Array();
+
+    function fn_del(value, name) {
+        fileNoArry.push(value);
+        fileNameArry.push(name);
+        $("#fileNoDel").attr("value", fileNoArry);
+        $("#fileNameDel").attr("value", fileNameArry);
     }
 </script>
 

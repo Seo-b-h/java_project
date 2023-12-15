@@ -9,7 +9,7 @@
 <!-- Last Update : 2023.12.04. -->
 <!-- Major update content : 글 조회시 조회수 증가 기능 SQL문 추가 by 서보혁 -->
 <!-- Last Update : 2023.12.15. -->
-<!-- Major update content : 파일 업로드, 조회, 다운로드 함수 추가 by 서보혁 -->
+<!-- Major update content : 파일 업로드, 조회, 다운로드, 수정 함수 추가 by 서보혁 -->
 <!-- 태그 규칙을 정의한 DTD 선언 => XML 파일이 어떤 구조와 어떤 element, 어떤 attributes를 가지는지 정의하는 것 -->
 
 <!-- SQL 구문이 존재하는 SQL Mapper 파일 -->
@@ -66,7 +66,10 @@
         WHERE BoardNumber = #{BoardNumber}
     </select>
 
-    <update id="update" parameterType="com.example.board.model.Board">
+    <update id="update" parameterType="com.example.board.model.Board" keyProperty="BoardNumber">
+        <selectKey keyProperty="BoardNumber" resultType="int" order="AFTER">
+            SELECT BoardNumber FROM boardtb ORDER BY BoardNumber DESC LIMIT 1
+        </selectKey>
         UPDATE BoardTb
          SET Title = #{title},
              Content = #{content}
@@ -94,6 +97,7 @@
         SELECT FILE_NO, ORG_FILE_NAME, ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
         FROM FILE
         WHERE BoardNumber = #{BoardNumber} AND DEL_GB = 'N'
+        ORDER BY FILE_NO
     </select>
 
     <select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
@@ -101,5 +105,11 @@
         FROM FILE
         WHERE FILE_NO = #{FILE_NO}
     </select>
+
+    <update id="updateFile" parameterType="hashMap">
+        UPDATE FILE
+        SET DEL_GB = 'Y'
+        WHERE FILE_NO = #{FILE_NO}
+    </update>
 </mapper>
 

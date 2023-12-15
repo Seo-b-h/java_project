@@ -10,7 +10,7 @@
  * Last Update : 2023.12.15.
  * Major update content : 파일 업로드, 조회 함수 추가 by 서보혁
  * Last Update : 2023.12.16.
- * Major update content : 파일 번호 조회 함수 추가 by 서보혁
+ * Major update content : 파일 번호 조회, 파일 수정 함수 추가 by 서보혁
  */
 package com.example.board.mapper;
 
@@ -46,4 +46,6 @@ public interface BoardMapper {
     public List<Map<String, Object>> selectFileList(int BoardNumber) throws Exception; // 파일 조회
 
     public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception; // 파일 번호 조회
+
+    public void updateFile(Map<String, Object> map) throws Exception; // 파일 수정, 삭제
 }

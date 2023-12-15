@@ -8,7 +8,7 @@
  * Last Update : 2023.12.15.
  * Major update content : write 함수 파일 업로드, 조회 기능 추가 by 서보혁
  * Last Update : 2023.12.16.
- * Major update content : 파일 번호 조회 기능 추가 by 서보혁
+ * Major update content : 파일 번호 조회, 파일 수정, 파일 삭제 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
@@ -32,12 +32,13 @@ public interface BoardService {
 
     public Board read(int boardNumber) throws Exception;
 
-    public void update(Board board) throws Exception;
+    public void update(Board board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception;
 
     public void delete(int bno) throws Exception;
 
     public List<Map<String, Object>> selectFileList(int BoardNumber) throws Exception;
 
     public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;
+
 
 }

@@ -87,7 +87,7 @@ public class BoardTest {
         Board updateBoard = new Board(1, "제목", "내용", "작성자", "2023-11-24");
 
         //when
-        boardService.update(updateBoard);
+        boardService.update(updateBoard, null, null, null);
 
         //then
         Assertions.assertThat(boardService.read(1).getTitle()).isEqualTo("제목");

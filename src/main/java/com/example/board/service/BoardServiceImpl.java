@@ -12,7 +12,7 @@
  * Last Update : 2023.12.15.
  * Major update content : write 함수 파일 업로드, 조회 기능 추가 by 서보혁
  * Last Update : 2023.12.16.
- * Major update content : 파일 번호 조회 기능 추가 by 서보혁
+ * Major update content : 파일 번호 조회, 파일 수정, 삭제 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
@@ -29,8 +29,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -78,8 +77,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
-    public void update(Board board) throws Exception {
+    public void update(Board board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
         boardMapper.update(board);
+        //logger.info("updateboardNumber : {}", board.getBoardNumber());
+        List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(board, files, fileNames, mpRequest);
+        for(Map<String, Object> tempMap : list) {
+            //logger.info("tempMap : {}", tempMap);
+            if(tempMap.get("IS_NEW").equals("Y")) boardMapper.insertFile(tempMap);
+            else boardMapper.updateFile(tempMap);
+        }
     }
 
     @Override
@@ -96,4 +102,6 @@ public class BoardServiceImpl implements BoardService {
     public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
         return boardMapper.selectFileInfo(map);
     }
+
+
 }
