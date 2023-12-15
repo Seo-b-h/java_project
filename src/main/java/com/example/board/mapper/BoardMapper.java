@@ -8,7 +8,7 @@
  * Last Update : 2023.12.04.
  * Major update content : 게시물 조회 시 조회수 증가 함수 추가 by 서보혁
  * Last Update : 2023.12.15.
- * Major update content : 파일 업로드 함수 추가 by 서보혁
+ * Major update content : 파일 업로드, 조회 함수 추가 by 서보혁
  */
 package com.example.board.mapper;
 
@@ -40,4 +40,6 @@ public interface BoardMapper {
     public void boardHit(int bno) throws Exception; // 게시물 조회수 증가
 
     public void insertFile(Map<String, Object> map) throws Exception; // 파일 업로드
+
+    public List<Map<String, Object>> selectFileList(int BoardNumber) throws Exception; // 파일 조회
 }

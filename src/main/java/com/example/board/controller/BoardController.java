@@ -8,7 +8,7 @@
  * Last Update : 2023.12.04.
  * Major update content : 회원이 글 목록 접속 시 세션 시간 초기화 기능 추가 by 서보혁
  * Last Update : 2023.12.15.
- * Major update content : write 메소드 파일 업로드 기능 추가 by 서보혁
+ * Major update content : write 메소드 파일 업로드 기능 추가, read 메소드 파일 조회 기능 추가 by 서보혁
  */
 package com.example.board.controller;
 
@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Map;
 
 @Controller //@Controller + @ResponseBody = @RestController
 //AJAX를 사용할 때 @ResponseBody가 필요함
@@ -90,6 +91,9 @@ public class BoardController {
 
         List<Comment> commentList = commentService.readComment(board.getBoardNumber());
         model.addAttribute("commentList", commentList);
+
+        List<Map<String, Object>> fileList = boardService.selectFileList(board.getBoardNumber());
+        model.addAttribute("file", fileList);
 
         return "board/readView";
     }

@@ -1,4 +1,6 @@
-/** BoardServiceImpl.java */
+/**
+ * BoardServiceImpl.java
+ */
 /*
  * Programmed by 최민규
  * 글 작성에 관한 서비스의 구현을 해놓은 클래스이다.
@@ -8,7 +10,7 @@
  * * Last Update : 2023.12.04.
  * Major update content : 글 조회 시 조회수 증가 기능 추가 by 서보혁
  * Last Update : 2023.12.15.
- * Major update content : write 함수 파일 업로드 기능 추가 by 서보혁
+ * Major update content : write 함수 파일 업로드, 조회 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
@@ -37,39 +39,35 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
 
-    @Resource(name="fileUtils")
+    @Resource(name = "fileUtils")
     private final FileUtils fileUtils;
 
     @Override
-    public void write(Board board, MultipartHttpServletRequest mpRequest) throws Exception
-    {
+    public void write(Board board, MultipartHttpServletRequest mpRequest) throws Exception {
         boardMapper.write(board);
         logger.info("boardNumber : {}", board.getBoardNumber());
         List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
         int size = list.size();
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             boardMapper.insertFile(list.get(i));
         }
     }
 
     @Override
-    public List<Board> listPage(SearchCriteria scri) throws Exception
-    {
+    public List<Board> listPage(SearchCriteria scri) throws Exception {
         List<Board> boardList = boardMapper.listPage(scri); //Ctrl + Alt + V : 리턴 변수 생성
 
         return boardList;
     }
 
-    public int listCount(SearchCriteria scri) throws Exception
-    {
+    public int listCount(SearchCriteria scri) throws Exception {
         int result = boardMapper.listCount(scri);
 
         return result;
     }
 
     @Override
-    public Board read(int boardNumber) throws Exception
-    {
+    public Board read(int boardNumber) throws Exception {
         boardMapper.boardHit(boardNumber);
         Board readBoard = boardMapper.read(boardNumber);
 
@@ -78,14 +76,17 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
-    public void update(Board board) throws Exception
-    {
+    public void update(Board board) throws Exception {
         boardMapper.update(board);
     }
 
     @Override
-    public void delete(int bno) throws Exception
-    {
+    public void delete(int bno) throws Exception {
         boardMapper.delete(bno);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectFileList(int BoardNumber) throws Exception {
+        return boardMapper.selectFileList(BoardNumber);
     }
 }

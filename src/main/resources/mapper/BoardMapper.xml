@@ -9,7 +9,7 @@
 <!-- Last Update : 2023.12.04. -->
 <!-- Major update content : 글 조회시 조회수 증가 기능 SQL문 추가 by 서보혁 -->
 <!-- Last Update : 2023.12.15. -->
-<!-- Major update content : 파일 업로드 함수 추가 by 서보혁 -->
+<!-- Major update content : 파일 업로드, 조회 함수 추가 by 서보혁 -->
 <!-- 태그 규칙을 정의한 DTD 선언 => XML 파일이 어떤 구조와 어떤 element, 어떤 attributes를 가지는지 정의하는 것 -->
 
 <!-- SQL 구문이 존재하는 SQL Mapper 파일 -->
@@ -99,5 +99,14 @@
                    #{FILE_SIZE}
                )
     </insert>
+
+    <select id="selectFileList" parameterType="int" resultType="hashMap">
+        SELECT FILE_NO,
+               ORG_FILE_NAME,
+               ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+        FROM FILE
+        WHERE BoardNumber = #{BoardNumber}
+          AND DEL_GB = 'N'
+    </select>
 </mapper>
 

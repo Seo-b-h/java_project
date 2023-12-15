@@ -6,7 +6,7 @@
  * Last Update : 2023.11.28.
  * Major update content : Source code 최초 작성 by 최민규
  * Last Update : 2023.12.15.
- * Major update content : write 함수 파일 업로드 기능 추가 by 서보혁
+ * Major update content : write 함수 파일 업로드, 조회 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
@@ -16,6 +16,7 @@ import com.example.board.model.SearchCriteria;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardService {
     //비즈니스 계층으로 역할과 구현을 분리한다 !! -> DIP(interface 사용으로)
@@ -32,5 +33,7 @@ public interface BoardService {
     public void update(Board board) throws Exception;
 
     public void delete(int bno) throws Exception;
+
+    public List<Map<String, Object>> selectFileList(int BoardNumber) throws Exception;
 
 }

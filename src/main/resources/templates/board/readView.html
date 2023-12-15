@@ -12,6 +12,8 @@
  * Major update content : 부트 스트랩 일부 적용 by 최민규
  * Last Update : 2023.12.05.
  * Major update content : 부트 스트랩 및 css 적용 by 서보혁
+ * Last Update : 2023.12.15.
+ * Major update content : 파일 조회 기능 추가 by 서보혁
  */
 -->
 <!DOCTYPE html>
@@ -89,7 +91,15 @@
                 <input type="text" id="register" name="register" class="form-control" th:value="${read.register}"
                        readonly="readonly"/>
             </div>
-
+            <span>파일 목록</span>
+            <div class="form-group" style="border: 1px solid #dbdbdb;">
+                <!--<label for="register" class="col-sm-2 control-label">작성날짜</label>-->
+                <!--<input type="text" id="register" name="register" class="form-control" th:value="${read.register}"
+                       readonly="readonly"/>-->
+                <th:block th:each="file : ${file}">
+                    <a href="#" onclick="fn_fileDown('$(file.FILE_NO)'); return false;" th:text="${file.ORG_FILE_NAME}"></a><th:block th:text="'('+${file.FILE_SIZE}+'kb)'"></th:block><br>
+                </th:block>
+            </div>
             <div>
                 <button type="button" class="list_btn btn btn-primary">목록</button>
                 <th:block th:if="${session.member != null} and ${session.member.ID == read.writer}">
