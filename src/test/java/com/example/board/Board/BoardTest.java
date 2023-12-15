@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -44,9 +45,8 @@ public class BoardTest {
     {
         //given : 이러한 환경이 주어졌을 때
         Board board = new Board("제목", "내용", "작성자", "2023-11-25");
-
         //when : 이런 동작을 하면
-        boardService.write(board);
+        boardService.write(board, null);
 
         //then : 이런 결과가 주어진다
     }

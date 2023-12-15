@@ -8,6 +8,8 @@
 <!-- Major update content : Source code 최초 작성 by 최민규 -->
 <!-- Last Update : 2023.12.04. -->
 <!-- Major update content : 글 조회시 조회수 증가 기능 SQL문 추가 by 서보혁 -->
+<!-- Last Update : 2023.12.15. -->
+<!-- Major update content : 파일 업로드 함수 추가 by 서보혁 -->
 <!-- 태그 규칙을 정의한 DTD 선언 => XML 파일이 어떤 구조와 어떤 element, 어떤 attributes를 가지는지 정의하는 것 -->
 
 <!-- SQL 구문이 존재하는 SQL Mapper 파일 -->
@@ -20,7 +22,10 @@
     <!-- resultMap : SELECT문 실행 결과를 담을 객체를 resultMap으로 지정 -->
     <!-- parameterType : 객체의 프로퍼티값이 SQL문의 입력 파라미터에 지정 -->
 
-    <insert id="write" parameterType="com.example.board.model.Board">
+    <insert id="write" parameterType="com.example.board.model.Board" keyProperty="BoardNumber">
+        <selectKey keyProperty="BoardNumber" resultType="int" order="AFTER">
+            SELECT BoardNumber FROM boardtb ORDER BY BoardNumber DESC LIMIT 1
+        </selectKey>
         INSERT INTO boardTb(Title, Content, Writer, Register)
         VALUES (#{title}, #{content}, #{writer}, #{register})
     </insert>
@@ -80,5 +85,19 @@
         WHERE BoardNumber = #{BoardNumber}
     </update>
 
+    <insert id="insertFile" parameterType="hashMap">
+        INSERT INTO FILE(
+            /*FILE_NO,*/
+            BoardNumber,
+            ORG_FILE_NAME,
+            STORED_FILE_NAME,
+            FILE_SIZE
+        )VALUES(
+                   #{BoardNumber},
+                   #{ORG_FILE_NAME},
+                   #{STORED_FILE_NAME},
+                   #{FILE_SIZE}
+               )
+    </insert>
 </mapper>
 

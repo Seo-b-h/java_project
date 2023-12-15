@@ -5,8 +5,10 @@
  * Date : 2023.11.28.
  * Last Update : 2023.11.28.
  * Major update content : Source code 최초 작성 by 최민규
- * * Last Update : 2023.12.04.
+ * Last Update : 2023.12.04.
  * Major update content : 회원이 글 목록 접속 시 세션 시간 초기화 기능 추가 by 서보혁
+ * Last Update : 2023.12.15.
+ * Major update content : write 메소드 파일 업로드 기능 추가 by 서보혁
  */
 package com.example.board.controller;
 
@@ -20,10 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.lang.reflect.Member;
@@ -53,11 +53,11 @@ public class BoardController {
     }
 
     @PostMapping(value = "/write")
-    public String write(Board board) throws Exception
+    public String write(Board board, MultipartHttpServletRequest mpRequest) throws Exception
     {
         //게시글 작성
         logger.info("write");
-        boardService.write(board);
+        boardService.write(board, mpRequest);
 
         return "redirect:/board/list";
     }

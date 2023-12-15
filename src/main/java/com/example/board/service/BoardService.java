@@ -5,12 +5,15 @@
  * Date : 2023.11.28.
  * Last Update : 2023.11.28.
  * Major update content : Source code 최초 작성 by 최민규
+ * Last Update : 2023.12.15.
+ * Major update content : write 함수 파일 업로드 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
 import com.example.board.model.Board;
 import com.example.board.model.Criteria;
 import com.example.board.model.SearchCriteria;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ public interface BoardService {
     //비즈니스 계층으로 역할과 구현을 분리한다 !! -> DIP(interface 사용으로)
     //interface -> 역할을 명시
     //모든 동작은 테스트 코드로 확인할 것 !! -> TDD 방식
-    public void write(Board board) throws Exception;
+    public void write(Board board, MultipartHttpServletRequest mpRequest) throws Exception;
 
     public List<Board> listPage(SearchCriteria scri) throws Exception;
 

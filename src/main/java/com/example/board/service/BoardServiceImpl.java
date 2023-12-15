@@ -7,24 +7,26 @@
  * Major update content : Source code 최초 작성 by 최민규
  * * Last Update : 2023.12.04.
  * Major update content : 글 조회 시 조회수 증가 기능 추가 by 서보혁
+ * Last Update : 2023.12.15.
+ * Major update content : write 함수 파일 업로드 기능 추가 by 서보혁
  */
 package com.example.board.service;
 
-import com.example.board.controller.BoardController;
 import com.example.board.mapper.BoardMapper;
 import com.example.board.model.Board;
-import com.example.board.model.Criteria;
 import com.example.board.model.SearchCriteria;
+import com.example.board.util.FileUtils;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,10 +37,19 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
 
+    @Resource(name="fileUtils")
+    private final FileUtils fileUtils;
+
     @Override
-    public void write(Board board) throws Exception
+    public void write(Board board, MultipartHttpServletRequest mpRequest) throws Exception
     {
         boardMapper.write(board);
+        logger.info("boardNumber : {}", board.getBoardNumber());
+        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
+        int size = list.size();
+        for(int i = 0; i < size; i++) {
+            boardMapper.insertFile(list.get(i));
+        }
     }
 
     @Override

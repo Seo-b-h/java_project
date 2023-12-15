@@ -10,6 +10,8 @@
  * Major update content : 회원만 글 작성을 할 수 있도록 수정 by 서보혁
  * Last Update : 2023.12.05.
  * Major update content : 부트 스트랩 및 css 적용 by 서보혁
+ * Last Update : 2023.12.15.
+ * Major update content : 파일 업로드 기능 추가 by 서보혁
  */
 -->
 <!DOCTYPE html>
@@ -51,7 +53,7 @@
         <hr style="clear:both;">
 
         <section id="container">
-            <form role="form" name="writeForm" th:action="@{/board/write}" method="post">
+            <form role="form" name="writeForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data">
                 <table>
                     <tbody>
                     <th:block th:if="${session.member != null}">
@@ -72,6 +74,9 @@
                             <!-- hidden input으로 현재 날짜를 전달 -->
                             <input type="hidden" id="register" name="register"
                                    th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="file"/>
                         </div>
                         <div>
                             <button type="button" class="write_btn btn btn-success">작성</button>
