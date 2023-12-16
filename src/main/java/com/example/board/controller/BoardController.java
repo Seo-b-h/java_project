@@ -123,7 +123,7 @@ public class BoardController {
     {
         //게시물 수정
         logger.info("update");
-
+        //logger.info("board : {}", board);
         boardService.update(board, files, fileNames, mpRequest);
 
         rttr.addAttribute("page", scri.getPage());

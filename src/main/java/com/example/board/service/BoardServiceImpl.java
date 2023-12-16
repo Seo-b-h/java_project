@@ -78,8 +78,8 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public void update(Board board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
+        //logger.info("updateboardNumber : {}", board);
         boardMapper.update(board);
-        //logger.info("updateboardNumber : {}", board.getBoardNumber());
         List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(board, files, fileNames, mpRequest);
         for(Map<String, Object> tempMap : list) {
             //logger.info("tempMap : {}", tempMap);

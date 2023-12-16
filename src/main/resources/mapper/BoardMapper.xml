@@ -67,9 +67,9 @@
     </select>
 
     <update id="update" parameterType="com.example.board.model.Board" keyProperty="BoardNumber">
-        <selectKey keyProperty="BoardNumber" resultType="int" order="AFTER">
+<!--        <selectKey keyProperty="BoardNumber" resultType="int" order="AFTER">
             SELECT BoardNumber FROM boardtb ORDER BY BoardNumber DESC LIMIT 1
-        </selectKey>
+        </selectKey>-->
         UPDATE BoardTb
          SET Title = #{title},
              Content = #{content}
