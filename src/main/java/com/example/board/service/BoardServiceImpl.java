@@ -46,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void write(Board board, MultipartHttpServletRequest mpRequest) throws Exception {
         boardMapper.write(board);
-        logger.info("boardNumber : {}", board.getBoardNumber());
+        //logger.info("boardNumber : {}", board.getBoardNumber());
         List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
         int size = list.size();
         for (int i = 0; i < size; i++) {
