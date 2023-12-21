@@ -11,6 +11,8 @@
  * Major update content : write 메소드 파일 업로드 기능 추가, read 메소드 파일 조회 기능 추가 by 서보혁
  * Last Update : 2023.12.16.
  * Major update content : 파일 다운로드, 수정 함수 추가 by 서보혁
+ * Last Update : 2023.12.21.
+ * Major update content : 글 조회 시에만 조회수 증가하도록 read 함수 수정 by 서보혁
  */
 package com.example.board.controller;
 
@@ -91,6 +93,7 @@ public class BoardController {
         //게시물 내용 화면
         logger.info("read");
 
+        boardService.boardHit(board.getBoardNumber());
         model.addAttribute("read", boardService.read(board.getBoardNumber()));
         model.addAttribute("scri", scri);
 

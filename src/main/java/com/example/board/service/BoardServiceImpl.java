@@ -13,6 +13,8 @@
  * Major update content : write 함수 파일 업로드, 조회 기능 추가 by 서보혁
  * Last Update : 2023.12.16.
  * Major update content : 파일 번호 조회, 파일 수정, 삭제 기능 추가 by 서보혁
+ * Last Update : 2023.12.21.
+ * Major update content : 글 조회 시에만 조회수 증가하도록 read함수에서 boardHit 함수 분리 by 서보혁
  */
 package com.example.board.service;
 
@@ -68,8 +70,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Board read(int boardNumber) throws Exception {
+    public void boardHit(int boardNumber) throws Exception {
         boardMapper.boardHit(boardNumber);
+    }
+
+    @Override
+    public Board read(int boardNumber) throws Exception {
         Board readBoard = boardMapper.read(boardNumber);
 
         return readBoard;

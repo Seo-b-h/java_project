@@ -12,6 +12,8 @@
  * Major update content : 부트 스트랩 일부 적용 by 최민규
  * Last Update : 2023.12.05.
  * Major update content : 부트 스트랩 및 css 적용 by 서보혁
+ * Last Update : 2023.12.21.
+ * Major update content : 회원인 경우 글 목록에서 글 수정, 삭제 기능 추가 by 서보혁
  */
 -->
 <!DOCTYPE html>
@@ -58,8 +60,20 @@
                     <th>작성자</th>
                     <th>등록일</th>
                     <th>조회수</th>
+                    <th>&nbsp수정</th>
+                    <th>&nbsp삭제</th>
                 </tr>
                 <tr th:each="item : ${list}">
+                    <form th:id="'readform'+${item.BoardNumber}" th:action="@{/board/readView}" method="post">
+                        <input type="hidden" id="BoardNumber" name="BoardNumber" th:value="${item.BoardNumber}"/>
+                        <input type="hidden" id="page" th:id="page" th:name="page" th:value="${scri.page}">
+                        <input type="hidden" id="perPageNum" th:id="perPageNum" th:name="perPageNum"
+                               th:value="${scri.perPageNum}">
+                        <input type="hidden" id="searchType" th:id="searchType" th:name="searchType"
+                               th:value="${scri.searchType}">
+                        <input type="hidden" id="keyword" th:id="keyword" th:name="keyword" th:value="${scri.keyword}">
+                        <input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+                    </form>
                     <td th:text="${item.BoardNumber}"></td>
                     <td>
                         <!--          <a th:href="@{/board/readView(BoardNumber=${item.BoardNumber})}" th:text="${item.title}"></a>-->
@@ -70,6 +84,43 @@
                     <td th:text="${item.writer}"></td>
                     <td th:text="${item.register}"></td>
                     <td th:text="${item.hit}"></td>
+                    <td>
+                        <th:block th:if="${session.member != null} and ${session.member.ID == item.writer}">
+                            <button th:id="'update_btn'+${item.BoardNumber}" type="button" style="padding: 0 3px 0 3px;"
+                                    class="btn btn-warning">수정
+                            </button>
+                        </th:block>
+                    </td>
+                    <td>
+                        <th:block th:if="${session.member != null} and ${session.member.ID == item.writer}">
+                            <button th:id="'delete_btn'+${item.BoardNumber}" type="button" style="padding: 0 3px 0 3px;"
+                                    class="btn btn-danger">삭제
+                            </button>
+                        </th:block>
+                    </td>
+                    <script th:inline="javascript">
+                        $(document).ready(function () {
+                            var str = "form#readform" + [[${item.BoardNumber}]];
+                            var update_btn = "button#update_btn" + [[${item.BoardNumber}]];
+                            var delete_btn = "button#delete_btn" + [[${item.BoardNumber}]];
+                            var formObj = $(str);
+
+                            $(update_btn).on("click", function () {
+                                formObj.attr("action", "/board/updateView");
+                                formObj.attr("method", "get");
+                                formObj.submit();
+                            })
+
+                            $(delete_btn).on("click", function () {
+                                var deleteConfirm = confirm("삭제하시겠습니까?");
+                                if (deleteConfirm) {
+                                    formObj.attr("action", "/board/delete");
+                                    formObj.attr("method", "post");
+                                    formObj.submit();
+                                }
+                            })
+                        })
+                    </script>
                 </tr>
             </table>
             <div class="search">
@@ -96,12 +147,13 @@
                 <script th:inline="javascript">
                     $(document).ready(function () {
                         $('#searchBtn').click(function () {
-                            var searchType = $('select[name="searchType"]').val();
-                            var keyword = $('#keywordInput').val();
-                            var url = "?page=1&perPageNum=10";
+                            let searchType = $('select[name="searchType"]').val();
+                            let keyword = $('#keywordInput').val();
+                            let url = "?page=1&perPageNum=10";
                             window.location.href = url + "&searchType=" + searchType + "&keyword=" + encodeURIComponent(keyword);
                         });
                     });
+
                 </script>
             </div>
 
