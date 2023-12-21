@@ -42,7 +42,6 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
 
-    @Resource(name = "fileUtils")
     private final FileUtils fileUtils;
 
     @Override
